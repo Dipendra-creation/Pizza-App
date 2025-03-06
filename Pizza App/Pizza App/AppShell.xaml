@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Shell xmlns="http://xamarin.com/schemas/2014/forms" 
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:local="clr-namespace:Pizza_App.Views"
+       Title="Pizza_App"
+       x:Class="Pizza_App.AppShell">
+
+    <!-- Shell styling -->
+    <Shell.Resources>
+        <ResourceDictionary>
+            <Style x:Key="BaseStyle" TargetType="Element">
+                <!-- Replace "PrimaryColor" with your chosen color resource key from App.xaml -->
+                <Setter Property="Shell.BackgroundColor" Value="{StaticResource PrimaryColor}" />
+                <Setter Property="Shell.ForegroundColor" Value="White" />
+                <Setter Property="Shell.TitleColor" Value="White" />
+                <Setter Property="Shell.DisabledColor" Value="#B4FFFFFF" />
+                <Setter Property="Shell.UnselectedColor" Value="#95FFFFFF" />
+                <Setter Property="Shell.TabBarBackgroundColor" Value="{StaticResource PrimaryColor}" />
+                <Setter Property="Shell.TabBarForegroundColor" Value="White" />
+                <Setter Property="Shell.TabBarUnselectedColor" Value="#95FFFFFF" />
+                <Setter Property="Shell.TabBarTitleColor" Value="White" />
+            </Style>
+            <Style TargetType="TabBar" BasedOn="{StaticResource BaseStyle}" />
+            <Style TargetType="FlyoutItem" BasedOn="{StaticResource BaseStyle}" />
+        </ResourceDictionary>
+    </Shell.Resources>
+
+    <!-- Main tabs: Home, Cart, Orders, Profile -->
+    <TabBar>
+        <ShellContent 
+            Title="Home" 
+            Icon="home.png" 
+            Route="home"
+            ContentTemplate="{DataTemplate local:Home}" />
+
+        <ShellContent 
+            Title="Cart" 
+            Icon="cart.png" 
+            Route="cart"
+            ContentTemplate="{DataTemplate local:Cart}" />
+
+        <ShellContent 
+            Title="Orders" 
+            Icon="history.png" 
+            Route="orders"
+            ContentTemplate="{DataTemplate local:OrderHistory}" />
+
+        <ShellContent 
+            Title="Profile" 
+            Icon="profile.png" 
+            Route="profile"
+            ContentTemplate="{DataTemplate local:Profile}" />
+    </TabBar>
+
+    <!-- Additional pages for in-app navigation -->
+    <ShellContent 
+        Route="customization" 
+        ContentTemplate="{DataTemplate local:PizzaCustomization}" />
+
+    <ShellContent 
+        Route="checkout" 
+        ContentTemplate="{DataTemplate local:Checkout}" />
+
+</Shell>

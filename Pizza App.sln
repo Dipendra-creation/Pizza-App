@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35825.156 d17.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pizza App.Android", "Pizza App\Pizza App.Android\Pizza App.Android.csproj", "{55819B14-67E6-4FDE-95EF-A6596DB12FEC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pizza App.iOS", "Pizza App\Pizza App.iOS\Pizza App.iOS.csproj", "{E3FFA6EE-13A9-4FF4-8076-197018CB0E8E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pizza App", "Pizza App\Pizza App\Pizza App.csproj", "{7C692F4A-C3AA-41B7-9074-1C5279A035F7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{55819B14-67E6-4FDE-95EF-A6596DB12FEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55819B14-67E6-4FDE-95EF-A6596DB12FEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55819B14-67E6-4FDE-95EF-A6596DB12FEC}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{55819B14-67E6-4FDE-95EF-A6596DB12FEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55819B14-67E6-4FDE-95EF-A6596DB12FEC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55819B14-67E6-4FDE-95EF-A6596DB12FEC}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{E3FFA6EE-13A9-4FF4-8076-197018CB0E8E}.Debug|Any CPU.ActiveCfg = Debug|iPhone
+		{E3FFA6EE-13A9-4FF4-8076-197018CB0E8E}.Debug|Any CPU.Build.0 = Debug|iPhone
+		{E3FFA6EE-13A9-4FF4-8076-197018CB0E8E}.Debug|Any CPU.Deploy.0 = Debug|iPhone
+		{E3FFA6EE-13A9-4FF4-8076-197018CB0E8E}.Release|Any CPU.ActiveCfg = Release|iPhoneSimulator
+		{E3FFA6EE-13A9-4FF4-8076-197018CB0E8E}.Release|Any CPU.Build.0 = Release|iPhoneSimulator
+		{E3FFA6EE-13A9-4FF4-8076-197018CB0E8E}.Release|Any CPU.Deploy.0 = Release|iPhoneSimulator
+		{7C692F4A-C3AA-41B7-9074-1C5279A035F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C692F4A-C3AA-41B7-9074-1C5279A035F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C692F4A-C3AA-41B7-9074-1C5279A035F7}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{7C692F4A-C3AA-41B7-9074-1C5279A035F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C692F4A-C3AA-41B7-9074-1C5279A035F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C692F4A-C3AA-41B7-9074-1C5279A035F7}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {89D04FC7-501B-41F4-AA37-F471FDB798BB}
+	EndGlobalSection
+EndGlobal
