@@ -56,7 +56,7 @@ namespace Pizza_App.Views
         {
             // Navigate to the pizza customization page
             // Pass a sample pizzaId (replace '1' as needed)
-            await Shell.Current.GoToAsync($"customization?pizzaId=1");
+            await Shell.Current.GoToAsync("///customization?pizzaId=1");
         }
     }
 }

@@ -1,12 +1,243 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Pizza_App.Views.Cart">
-    <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+<ContentPage 
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="Pizza_App.Views.Cart"
+    BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColor}, Dark={StaticResource BackgroundColorDark}}"
+    Title="My Cart">
+
+    <!-- 
+      Layout: 
+      Row 0 = Header
+      Row 1 = Scrollable cart items
+      Row 2 = Checkout button 
+    -->
+    <Grid RowDefinitions="Auto,*,Auto">
+
+        <!-- Header -->
+        <StackLayout Grid.Row="0" Padding="20,10">
+            <Label Text="Your Cart" 
+                   Style="{StaticResource HeaderLabel}" />
+            <Label Text="3 items in your cart" 
+                   Style="{StaticResource BodyLabel}" />
         </StackLayout>
-    </ContentPage.Content>
+
+        <!-- Cart Items -->
+        <ScrollView Grid.Row="1">
+            <StackLayout Padding="20,0,20,20" Spacing="15">
+
+                <!-- Cart Item 1 -->
+                <Frame CornerRadius="15" Padding="15" HasShadow="True"
+                       BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColor}, 
+                                                         Dark={StaticResource SurfaceColorDark}}">
+                    <!-- Basic shadow only. If you want advanced offset or color, 
+                         consider Sharpnado.Shadows or CommunityToolkit. -->
+                    <Grid ColumnDefinitions="Auto,*,Auto">
+
+                        <!-- Pizza Image -->
+                        <Image Grid.Column="0" Source="pizza_placeholder.png" 
+                               HeightRequest="70" WidthRequest="70"
+                               Aspect="AspectFill" VerticalOptions="Center" />
+
+                        <!-- Pizza Details -->
+                        <StackLayout Grid.Column="1" VerticalOptions="Center" Margin="15,0">
+                            <Label Text="Pepperoni Pizza" 
+                                   FontFamily="Montserrat-Bold" FontSize="16"
+                                   TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, 
+                                                              Dark={StaticResource TextPrimaryColorDark}}" />
+                            <Label Text="Small, Thin Crust" 
+                                   FontFamily="Montserrat-Regular" FontSize="12"
+                                   TextColor="{AppThemeBinding Light={StaticResource TextSecondaryColor}, 
+                                                              Dark={StaticResource TextSecondaryColorDark}}" />
+                            <Label Text="$12.99" 
+                                   FontFamily="Montserrat-Bold" FontSize="16"
+                                   TextColor="{AppThemeBinding Light={StaticResource PrimaryColor}, 
+                                                              Dark={StaticResource PrimaryColorDark}}"
+                                   Margin="0,5,0,0" />
+                        </StackLayout>
+
+                        <!-- Quantity Controls -->
+                        <StackLayout Grid.Column="2" Orientation="Horizontal" VerticalOptions="Center">
+                            <Button Text="-" FontSize="18" FontAttributes="Bold"
+                                    BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, 
+                                                                  Dark={StaticResource SurfaceColorDark}}"
+                                    TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, 
+                                                         Dark={StaticResource TextPrimaryColorDark}}"
+                                    CornerRadius="10" WidthRequest="35" HeightRequest="35"
+                                    Padding="0" VerticalOptions="Center" />
+
+                            <Label Text="1"
+                                   FontFamily="Montserrat-Bold" FontSize="16"
+                                   TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, 
+                                                              Dark={StaticResource TextPrimaryColorDark}}"
+                                   VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="30"
+                                   HorizontalTextAlignment="Center" />
+
+                            <Button Text="+" FontSize="18" FontAttributes="Bold"
+                                    BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryColor}, 
+                                                                  Dark={StaticResource PrimaryColorDark}}"
+                                    TextColor="White"
+                                    CornerRadius="10" WidthRequest="35" HeightRequest="35"
+                                    Padding="0" VerticalOptions="Center" />
+                        </StackLayout>
+                    </Grid>
+                </Frame>
+
+                <!-- Cart Item 2 -->
+                <Frame CornerRadius="15" Padding="15" HasShadow="True"
+                       BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColor}, 
+                                                         Dark={StaticResource SurfaceColorDark}}">
+                    <Grid ColumnDefinitions="Auto,*,Auto">
+
+                        <!-- Pizza Image -->
+                        <Image Grid.Column="0" Source="pizza_placeholder.png" 
+                               HeightRequest="70" WidthRequest="70"
+                               Aspect="AspectFill" VerticalOptions="Center" />
+
+                        <!-- Pizza Details -->
+                        <StackLayout Grid.Column="1" VerticalOptions="Center" Margin="15,0">
+                            <Label Text="Margherita Pizza" 
+                                   FontFamily="Montserrat-Bold" FontSize="16"
+                                   TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, 
+                                                              Dark={StaticResource TextPrimaryColorDark}}" />
+                            <Label Text="Medium, Thin Crust" 
+                                   FontFamily="Montserrat-Regular" FontSize="12"
+                                   TextColor="{AppThemeBinding Light={StaticResource TextSecondaryColor}, 
+                                                              Dark={StaticResource TextSecondaryColorDark}}" />
+                            <Label Text="$14.99" 
+                                   FontFamily="Montserrat-Bold" FontSize="16"
+                                   TextColor="{AppThemeBinding Light={StaticResource PrimaryColor}, 
+                                                              Dark={StaticResource PrimaryColorDark}}"
+                                   Margin="0,5,0,0" />
+                        </StackLayout>
+
+                        <!-- Quantity Controls -->
+                        <StackLayout Grid.Column="2" Orientation="Horizontal" VerticalOptions="Center">
+                            <Button Text="-" FontSize="18" FontAttributes="Bold"
+                                    BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, 
+                                                                  Dark={StaticResource SurfaceColorDark}}"
+                                    TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, 
+                                                         Dark={StaticResource TextPrimaryColorDark}}"
+                                    CornerRadius="10" WidthRequest="35" HeightRequest="35"
+                                    Padding="0" VerticalOptions="Center" />
+
+                            <Label Text="2"
+                                   FontFamily="Montserrat-Bold" FontSize="16"
+                                   TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, 
+                                                              Dark={StaticResource TextPrimaryColorDark}}"
+                                   VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="30"
+                                   HorizontalTextAlignment="Center" />
+
+                            <Button Text="+" FontSize="18" FontAttributes="Bold"
+                                    BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryColor}, 
+                                                                  Dark={StaticResource PrimaryColorDark}}"
+                                    TextColor="White"
+                                    CornerRadius="10" WidthRequest="35" HeightRequest="35"
+                                    Padding="0" VerticalOptions="Center" />
+                        </StackLayout>
+                    </Grid>
+                </Frame>
+
+                <!-- Promo Code -->
+                <Frame CornerRadius="15" Padding="15" Margin="0,10,0,0" HasShadow="True"
+                       BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, 
+                                                         Dark={StaticResource SurfaceColorDark}}">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Entry Grid.Column="0" 
+                               Placeholder="Enter promo code"
+                               PlaceholderColor="{AppThemeBinding Light={StaticResource TextSecondaryColor}, 
+                                                             Dark={StaticResource TextSecondaryColorDark}}"
+                               TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, 
+                                                  Dark={StaticResource TextPrimaryColorDark}}"
+                               BackgroundColor="Transparent" />
+
+                        <Button Grid.Column="1" Text="Apply"
+                                BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryColor}, 
+                                                              Dark={StaticResource PrimaryColorDark}}"
+                                TextColor="White" CornerRadius="20" Padding="15,0" />
+                    </Grid>
+                </Frame>
+
+                <!-- Order Summary -->
+                <Frame CornerRadius="15" Padding="15" Margin="0,10,0,0" HasShadow="True"
+                       BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, 
+                                                         Dark={StaticResource SurfaceColorDark}}">
+                    <StackLayout Spacing="10">
+                        <Label Text="Order Summary" 
+                               FontFamily="Montserrat-Bold" FontSize="18"
+                               TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, 
+                                                          Dark={StaticResource TextPrimaryColorDark}}" />
+
+                        <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto,Auto" RowSpacing="10">
+                            <Label Grid.Row="0" Grid.Column="0" Text="Subtotal"
+                                   FontFamily="Montserrat-Regular" FontSize="14"
+                                   TextColor="{AppThemeBinding Light={StaticResource TextSecondaryColor}, 
+                                                          Dark={StaticResource TextSecondaryColorDark}}" />
+                            <Label Grid.Row="0" Grid.Column="1" Text="$42.97"
+                                   FontFamily="Montserrat-SemiBold" FontSize="14"
+                                   TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, 
+                                                          Dark={StaticResource TextPrimaryColorDark}}" />
+
+                            <Label Grid.Row="1" Grid.Column="0" Text="Delivery Fee"
+                                   FontFamily="Montserrat-Regular" FontSize="14"
+                                   TextColor="{AppThemeBinding Light={StaticResource TextSecondaryColor}, 
+                                                          Dark={StaticResource TextSecondaryColorDark}}" />
+                            <Label Grid.Row="1" Grid.Column="1" Text="$2.99"
+                                   FontFamily="Montserrat-SemiBold" FontSize="14"
+                                   TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, 
+                                                          Dark={StaticResource TextPrimaryColorDark}}" />
+
+                            <Label Grid.Row="2" Grid.Column="0" Text="Tax"
+                                   FontFamily="Montserrat-Regular" FontSize="14"
+                                   TextColor="{AppThemeBinding Light={StaticResource TextSecondaryColor}, 
+                                                          Dark={StaticResource TextSecondaryColorDark}}" />
+                            <Label Grid.Row="2" Grid.Column="1" Text="$3.44"
+                                   FontFamily="Montserrat-SemiBold" FontSize="14"
+                                   TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, 
+                                                          Dark={StaticResource TextPrimaryColorDark}}" />
+
+                            <BoxView Grid.Row="3" Grid.ColumnSpan="2" HeightRequest="1"
+                                     Color="{AppThemeBinding Light={StaticResource BorderColor}, 
+                                                       Dark={StaticResource BorderColorDark}}" />
+                        </Grid>
+                    </StackLayout>
+                </Frame>
+            </StackLayout>
+        </ScrollView>
+
+        <!-- Checkout Button -->
+        <Frame Grid.Row="2" Padding="20" HasShadow="True"
+               BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource SurfaceColorDark}}">
+            <!-- 
+               For advanced shadow offset, consider Sharpnado or CommunityToolkit. 
+               For a gradient background, see the PizzaCustomization approach with LinearGradientBrush.
+            -->
+            <Grid ColumnDefinitions="*,Auto">
+                <StackLayout Grid.Column="0" VerticalOptions="Center">
+                    <Label Text="Total"
+                           TextColor="{AppThemeBinding Light={StaticResource TextSecondaryColor}, Dark={StaticResource TextSecondaryColorDark}}"
+                           FontFamily="Montserrat-Regular" 
+                           FontSize="14" />
+                    <Label Text="$49.40"
+                           TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, Dark={StaticResource TextPrimaryColorDark}}"
+                           FontFamily="Montserrat-Bold"
+                           FontSize="24" />
+                </StackLayout>
+
+                <!-- "Checkout" Button as a Frame with gradient? 
+                     Or simply a Button with a single color? 
+                     Let's do a simple Button for now. -->
+                <Button Grid.Column="1" 
+                        Text="Checkout"
+                        FontFamily="Montserrat-Bold"
+                        FontSize="16"
+                        TextColor="White"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryColor}, Dark={StaticResource PrimaryColorDark}}"
+                        CornerRadius="25"
+                        Padding="20,15"
+                        HorizontalOptions="End"
+                        VerticalOptions="Center" />
+            </Grid>
+        </Frame>
+    </Grid>
 </ContentPage>
