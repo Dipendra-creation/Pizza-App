@@ -1,12 +1,229 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Pizza_App.Views.Checkout">
-    <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+<ContentPage 
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+   xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps"
+    x:Class="Pizza_App.Views.Checkout"
+    Title="Checkout"
+    BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColor}, Dark={StaticResource BackgroundColorDark}}">
+
+    <!-- 
+      Layout: 3 rows
+      Row 0: Header
+      Row 1: ScrollView with contact/delivery/payment frames
+      Row 2: Bottom bar with "Place Order" 
+    -->
+    <Grid RowDefinitions="Auto,*,Auto">
+
+        <!-- Header -->
+        <StackLayout Grid.Row="0" Padding="20,10">
+            <Label Text="Checkout" 
+                   Style="{StaticResource HeaderLabel}" />
+            <Label Text="Complete your order" 
+                   Style="{StaticResource BodyLabel}" />
         </StackLayout>
-    </ContentPage.Content>
+
+        <!-- Checkout Form -->
+        <ScrollView Grid.Row="1">
+            <StackLayout Padding="20,0,20,20" Spacing="15">
+
+                <!-- CONTACT INFORMATION -->
+                <Frame CornerRadius="15" Padding="15" HasShadow="True"
+                       BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColor}, 
+                                                         Dark={StaticResource SurfaceColorDark}}">
+                    <StackLayout Spacing="10">
+                        <Label Text="Contact Information" 
+                               FontFamily="Montserrat-Bold" FontSize="18"
+                               TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, Dark={StaticResource TextPrimaryColorDark}}" />
+
+                        <StackLayout Spacing="15">
+                            <!-- Full Name -->
+                            <StackLayout>
+                                <Label Text="Full Name" 
+                                       FontFamily="Montserrat-SemiBold" FontSize="14"
+                                       TextColor="{AppThemeBinding Light={StaticResource TextSecondaryColor}, Dark={StaticResource TextSecondaryColorDark}}" />
+                                <Frame Padding="10,0" HasShadow="False" CornerRadius="10"
+                                       BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource SurfaceColorDark}}">
+                                    <Entry Placeholder="John Doe"
+                                           PlaceholderColor="{AppThemeBinding Light={StaticResource TextSecondaryColor}, Dark={StaticResource TextSecondaryColorDark}}"
+                                           TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, Dark={StaticResource TextPrimaryColorDark}}"
+                                           BackgroundColor="Transparent" />
+                                </Frame>
+                            </StackLayout>
+
+                            <!-- Phone Number -->
+                            <StackLayout>
+                                <Label Text="Phone Number" 
+                                       FontFamily="Montserrat-SemiBold" FontSize="14"
+                                       TextColor="{AppThemeBinding Light={StaticResource TextSecondaryColor}, Dark={StaticResource TextSecondaryColorDark}}" />
+                                <Frame Padding="10,0" HasShadow="False" CornerRadius="10"
+                                       BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource SurfaceColorDark}}">
+                                    <Entry Placeholder="+1 (555) 123-4567"
+                                           PlaceholderColor="{AppThemeBinding Light={StaticResource TextSecondaryColor}, Dark={StaticResource TextSecondaryColorDark}}"
+                                           TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, Dark={StaticResource TextPrimaryColorDark}}"
+                                           BackgroundColor="Transparent" 
+                                           Keyboard="Telephone" />
+                                </Frame>
+                            </StackLayout>
+
+                            <!-- Email -->
+                            <StackLayout>
+                                <Label Text="Email" 
+                                       FontFamily="Montserrat-SemiBold" FontSize="14"
+                                       TextColor="{AppThemeBinding Light={StaticResource TextSecondaryColor}, Dark={StaticResource TextSecondaryColorDark}}" />
+                                <Frame Padding="10,0" HasShadow="False" CornerRadius="10"
+                                       BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource SurfaceColorDark}}">
+                                    <Entry Placeholder="john.doe@example.com"
+                                           PlaceholderColor="{AppThemeBinding Light={StaticResource TextSecondaryColor}, Dark={StaticResource TextSecondaryColorDark}}"
+                                           TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, Dark={StaticResource TextPrimaryColorDark}}"
+                                           BackgroundColor="Transparent"
+                                           Keyboard="Email" />
+                                </Frame>
+                            </StackLayout>
+                        </StackLayout>
+                    </StackLayout>
+                </Frame>
+
+                <!-- DELIVERY ADDRESS -->
+                <Frame CornerRadius="15" Padding="15" HasShadow="True"
+                       BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColor}, 
+                                                         Dark={StaticResource SurfaceColorDark}}">
+                    <StackLayout Spacing="10">
+                        <Label Text="Delivery Address" 
+                               FontFamily="Montserrat-Bold" FontSize="18"
+                               TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, Dark={StaticResource TextPrimaryColorDark}}" />
+
+                        <StackLayout Spacing="15">
+                            <!-- Street Address -->
+                            <StackLayout>
+                                <Label Text="Street Address"
+                                       FontFamily="Montserrat-SemiBold" FontSize="14"
+                                       TextColor="{AppThemeBinding Light={StaticResource TextSecondaryColor}, Dark={StaticResource TextSecondaryColorDark}}" />
+                                <Frame Padding="10,0" HasShadow="False" CornerRadius="10"
+                                       BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource SurfaceColorDark}}">
+                                    <Entry Placeholder="123 Main St"
+                                           PlaceholderColor="{AppThemeBinding Light={StaticResource TextSecondaryColor}, Dark={StaticResource TextSecondaryColorDark}}"
+                                           TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, Dark={StaticResource TextPrimaryColorDark}}"
+                                           BackgroundColor="Transparent" />
+                                </Frame>
+                            </StackLayout>
+
+                            <!-- Apartment/Suite -->
+                            <StackLayout>
+                                <Label Text="Apartment/Suite (Optional)"
+                                       FontFamily="Montserrat-SemiBold" FontSize="14"
+                                       TextColor="{AppThemeBinding Light={StaticResource TextSecondaryColor}, Dark={StaticResource TextSecondaryColorDark}}" />
+                                <Frame Padding="10,0" HasShadow="False" CornerRadius="10"
+                                       BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource SurfaceColorDark}}">
+                                    <Entry Placeholder="Apt 4B"
+                                           PlaceholderColor="{AppThemeBinding Light={StaticResource TextSecondaryColor}, Dark={StaticResource TextSecondaryColorDark}}"
+                                           TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, Dark={StaticResource TextPrimaryColorDark}}"
+                                           BackgroundColor="Transparent" />
+                                </Frame>
+                            </StackLayout>
+
+                            <!-- City & Zip Code -->
+                            <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                                <StackLayout Grid.Column="0">
+                                    <Label Text="City"
+                                           FontFamily="Montserrat-SemiBold" FontSize="14"
+                                           TextColor="{AppThemeBinding Light={StaticResource TextSecondaryColor}, Dark={StaticResource TextSecondaryColorDark}}" />
+                                    <Frame Padding="10,0" HasShadow="False" CornerRadius="10"
+                                           BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource SurfaceColorDark}}">
+                                        <Entry Placeholder="New York"
+                                               PlaceholderColor="{AppThemeBinding Light={StaticResource TextSecondaryColor}, Dark={StaticResource TextSecondaryColorDark}}"
+                                               TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, Dark={StaticResource TextPrimaryColorDark}}"
+                                               BackgroundColor="Transparent" />
+                                    </Frame>
+                                </StackLayout>
+
+                                <StackLayout Grid.Column="1">
+                                    <Label Text="Zip Code"
+                                           FontFamily="Montserrat-SemiBold" FontSize="14"
+                                           TextColor="{AppThemeBinding Light={StaticResource TextSecondaryColor}, Dark={StaticResource TextSecondaryColorDark}}" />
+                                    <Frame Padding="10,0" HasShadow="False" CornerRadius="10"
+                                           BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource SurfaceColorDark}}">
+                                        <Entry Placeholder="10001"
+                                               PlaceholderColor="{AppThemeBinding Light={StaticResource TextSecondaryColor}, Dark={StaticResource TextSecondaryColorDark}}"
+                                               TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, Dark={StaticResource TextPrimaryColorDark}}"
+                                               BackgroundColor="Transparent"
+                                               Keyboard="Numeric" />
+                                    </Frame>
+                                </StackLayout>
+                            </Grid>
+
+                            <!-- Map for selecting location -->
+                            <Label Text="Select Location on Map"
+                                   FontFamily="Montserrat-SemiBold" FontSize="14"
+                                   TextColor="{AppThemeBinding Light={StaticResource TextSecondaryColor}, Dark={StaticResource TextSecondaryColorDark}}" />
+
+                            <Frame Padding="0" HasShadow="False" CornerRadius="15" HeightRequest="200">
+                                <maps:Map x:Name="DeliveryMap" IsShowingUser="True" />
+                            </Frame>
+                        </StackLayout>
+                    </StackLayout>
+                </Frame>
+
+                <!-- PAYMENT METHOD -->
+                <Frame CornerRadius="15" Padding="15" HasShadow="True"
+                       BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColor}, 
+                                                         Dark={StaticResource SurfaceColorDark}}">
+                    <StackLayout Spacing="10">
+                        <Label Text="Payment Method" 
+                               FontFamily="Montserrat-Bold" FontSize="18"
+                               TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, Dark={StaticResource TextPrimaryColorDark}}" />
+
+                        <StackLayout Spacing="10">
+                            <RadioButton Content="Credit Card"
+                                         TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, Dark={StaticResource TextPrimaryColorDark}}"
+                                         IsChecked="True" />
+                            <RadioButton Content="Cash on Delivery"
+                                         TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, Dark={StaticResource TextPrimaryColorDark}}" />
+                            <RadioButton Content="PayPal"
+                                         TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, Dark={StaticResource TextPrimaryColorDark}}" />
+                        </StackLayout>
+                    </StackLayout>
+                </Frame>
+
+            </StackLayout>
+        </ScrollView>
+
+        <!-- PLACE ORDER BUTTON (BOTTOM BAR) -->
+        <Frame Grid.Row="2" Padding="20" HasShadow="True"
+               BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource SurfaceColorDark}}">
+            <!-- 
+              If you want a gradient, you can use Frame.Background 
+              with <LinearGradientBrush>.
+            -->
+            <Grid ColumnDefinitions="*,Auto">
+                <StackLayout Grid.Column="0" VerticalOptions="Center">
+                    <Label Text="Total" 
+                           TextColor="{AppThemeBinding Light={StaticResource TextSecondaryColor}, Dark={StaticResource TextSecondaryColorDark}}"
+                           FontFamily="Montserrat-Regular" FontSize="14" />
+                    <Label Text="$49.40" 
+                           TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, Dark={StaticResource TextPrimaryColorDark}}"
+                           FontFamily="Montserrat-Bold" FontSize="24" />
+                </StackLayout>
+
+                <Frame Grid.Column="1"
+                       CornerRadius="25"
+                       Padding="20,15"
+                       HasShadow="False"
+                       BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryColor}, Dark={StaticResource PrimaryColorDark}}"
+                       HorizontalOptions="End"
+                       VerticalOptions="Center">
+                    <StackLayout Orientation="Horizontal" Spacing="10">
+                        <ActivityIndicator x:Name="OrderActivityIndicator" 
+                                           IsRunning="False" 
+                                           Color="White" 
+                                           IsVisible="False" />
+                        <Label Text="Place Order" 
+                               TextColor="White" 
+                               FontFamily="Montserrat-Bold" 
+                               FontSize="16" />
+                    </StackLayout>
+                </Frame>
+            </Grid>
+        </Frame>
+    </Grid>
 </ContentPage>
