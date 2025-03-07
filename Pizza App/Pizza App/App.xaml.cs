@@ -8,25 +8,35 @@ namespace Pizza_App
 {
     public partial class App : Application
     {
-
-        public App ()
+        // This constructor runs when the app starts up.
+        // It initializes resources and sets the main page.
+        public App()
         {
             InitializeComponent();
 
+            // Register a mock data store for demonstration purposes.
             DependencyService.Register<MockDataStore>();
+
+            // Set the main page to AppShell, which handles our app's navigation.
             MainPage = new AppShell();
         }
 
-        protected override void OnStart ()
+        // This method is called when the app is first launched or resumed from not running.
+        protected override void OnStart()
         {
+            // Perform any startup tasks here, like checking for updates or setting analytics.
         }
 
-        protected override void OnSleep ()
+        // This method is called when the app goes into the background (e.g., user switches away).
+        protected override void OnSleep()
         {
+            // Use this for saving data or releasing resources you don’t need in the background.
         }
 
-        protected override void OnResume ()
+        // This method is called when the app returns from the background to the foreground.
+        protected override void OnResume()
         {
+            // Restore any data or state that was released or saved during OnSleep.
         }
     }
 }

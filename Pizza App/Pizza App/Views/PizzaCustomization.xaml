@@ -1,4 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
+<!--
+  This ContentPage defines the PizzaCustomization view for the Pizza_App.
+  Users can customize their pizza by selecting size, crust, and toppings.
+  The page is divided into three main sections:
+  1. Top Section: Displays a gradient background with a pizza image and basic details.
+  2. Middle Section: A ScrollView containing controls for selecting pizza size, crust, and toppings.
+  3. Bottom Section: Displays the total price and an "Add to Cart" button.
+-->
 <ContentPage 
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -6,14 +14,13 @@
     Title="Customize Your Pizza"
     BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColor}, Dark={StaticResource BackgroundColorDark}}">
 
-    <!-- 
-      RESOURCE DICTIONARY
-      Replacing PancakeView with Frame-based styles
-    -->
+    <!-- RESOURCE DICTIONARY -->
+    <!-- This ResourceDictionary defines reusable styles for topping icons and size/crust options.
+         It replaces PancakeView styling with Frame-based styles. -->
     <ContentPage.Resources>
         <ResourceDictionary>
 
-            <!-- ToppingIconStyle for each topping -->
+            <!-- Style for topping icons used in the toppings selection -->
             <Style x:Key="ToppingIconStyle" TargetType="Frame">
                 <Setter Property="CornerRadius" Value="15" />
                 <Setter Property="HeightRequest" Value="80" />
@@ -27,7 +34,7 @@
                         Value="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource BorderColorDark}}" />
             </Style>
 
-            <!-- SizeOptionStyle for small/medium/large or crust frames -->
+            <!-- Style for size and crust option frames -->
             <Style x:Key="SizeOptionStyle" TargetType="Frame">
                 <Setter Property="CornerRadius" Value="10" />
                 <Setter Property="Padding" Value="15,10" />
@@ -40,20 +47,16 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <!-- 
-      MAIN LAYOUT: 3 Rows
-      Row 0: Pizza Image (Gradient)
-      Row 1: ScrollView (Size, Crust, Toppings)
-      Row 2: Bottom Bar (Price & Add to Cart)
-    -->
+    <!-- MAIN LAYOUT: Divided into three rows -->
     <Grid RowDefinitions="Auto,*,Auto">
 
-        <!-- TOP SECTION: Gradient + Pizza Image -->
+        <!-- TOP SECTION: Gradient background with pizza image and header text -->
         <Frame Grid.Row="0"
                HeightRequest="200"
                CornerRadius="0"
                HasShadow="False"
                Padding="0">
+            <!-- LinearGradientBrush creates a gradient background for visual impact -->
             <Frame.Background>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                     <GradientStop Color="{AppThemeBinding Light={StaticResource PrimaryColor}, Dark={StaticResource PrimaryDarkColorDark}}" Offset="0.0" />
@@ -61,10 +64,13 @@
                 </LinearGradientBrush>
             </Frame.Background>
 
+            <!-- Overlay Grid containing the pizza image and descriptive text -->
             <Grid>
+                <!-- Semi-transparent pizza image to serve as a background -->
                 <Image Source="pizza_large.png"
                        Aspect="AspectFill"
                        Opacity="0.6" />
+                <!-- Text overlay displaying the pizza name and a tagline -->
                 <StackLayout VerticalOptions="End" Padding="20">
                     <Label Text="Pepperoni Pizza"
                            TextColor="White"
@@ -79,7 +85,7 @@
             </Grid>
         </Frame>
 
-        <!-- MIDDLE SECTION: ScrollView with size, crust, toppings -->
+        <!-- MIDDLE SECTION: ScrollView containing customization options -->
         <ScrollView Grid.Row="1">
             <StackLayout Padding="20,10">
 
@@ -88,13 +94,10 @@
                        Style="{StaticResource SubHeaderLabel}"
                        Margin="0,10" />
 
-                <!-- 
-                  Named container for Size frames
-                  so code-behind can do 'SizeContainer.Children'
-                -->
+                <!-- Grid container for size options; named for code-behind access -->
                 <Grid x:Name="SizeContainer" ColumnDefinitions="*,*,*">
 
-                    <!-- SMALL -->
+                    <!-- SMALL SIZE OPTION -->
                     <Frame Grid.Column="0"
                            ClassId="small"
                            Style="{StaticResource SizeOptionStyle}">
@@ -115,7 +118,7 @@
                         </StackLayout>
                     </Frame>
 
-                    <!-- MEDIUM -->
+                    <!-- MEDIUM SIZE OPTION -->
                     <Frame Grid.Column="1"
                            ClassId="medium"
                            Style="{StaticResource SizeOptionStyle}">
@@ -136,7 +139,7 @@
                         </StackLayout>
                     </Frame>
 
-                    <!-- LARGE -->
+                    <!-- LARGE SIZE OPTION -->
                     <Frame Grid.Column="2"
                            ClassId="large"
                            Style="{StaticResource SizeOptionStyle}">
@@ -163,19 +166,17 @@
                        Style="{StaticResource SubHeaderLabel}"
                        Margin="0,20,0,10" />
 
-                <!-- 
-                  Named container for Crust frames
-                  so code-behind can do 'CrustContainer.Children'
-                -->
+                <!-- Grid container for crust options; named for code-behind access -->
                 <Grid x:Name="CrustContainer" ColumnDefinitions="*,*">
 
-                    <!-- THIN -->
+                    <!-- THIN CRUST OPTION -->
                     <Frame Grid.Column="0"
                            ClassId="thin"
                            Style="{StaticResource SizeOptionStyle}">
                         <Frame.GestureRecognizers>
                             <TapGestureRecognizer Tapped="OnCrustSelected" />
                         </Frame.GestureRecognizers>
+                        <!-- Pre-colored background to indicate default selection -->
                         <Frame.Background>
                             <SolidColorBrush Color="{AppThemeBinding Light={StaticResource PrimaryColor}, Dark={StaticResource PrimaryColorDark}}" />
                         </Frame.Background>
@@ -186,7 +187,7 @@
                                VerticalOptions="Center" />
                     </Frame>
 
-                    <!-- THICK -->
+                    <!-- THICK CRUST OPTION -->
                     <Frame Grid.Column="1"
                            ClassId="thick"
                            Style="{StaticResource SizeOptionStyle}">
@@ -209,10 +210,7 @@
                        Style="{StaticResource BodyLabel}"
                        Margin="0,0,0,10" />
 
-                <!-- 
-                  Named container for Toppings
-                  if you want to iterate them in code-behind 
-                -->
+                <!-- FlexLayout container for toppings; allows wrapping for multiple items -->
                 <FlexLayout x:Name="ToppingsContainer"
                             Wrap="Wrap"
                             JustifyContent="SpaceAround">
@@ -223,6 +221,7 @@
                         <Frame.GestureRecognizers>
                             <TapGestureRecognizer Tapped="OnToppingSelected" />
                         </Frame.GestureRecognizers>
+                        <!-- Pre-colored background indicates current selection -->
                         <Frame.Background>
                             <SolidColorBrush Color="{AppThemeBinding Light={StaticResource PrimaryColor}, Dark={StaticResource PrimaryColorDark}}" />
                         </Frame.Background>
@@ -352,7 +351,7 @@
             </StackLayout>
         </ScrollView>
 
-        <!-- BOTTOM SECTION: Price & "Add to Cart" -->
+        <!-- BOTTOM SECTION: Price display and "Add to Cart" button -->
         <Frame Grid.Row="2"
                CornerRadius="30"
                Padding="20"
@@ -360,13 +359,14 @@
                BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource SurfaceColorDark}}">
 
             <Grid ColumnDefinitions="*,Auto">
+                <!-- Total Price Information -->
                 <StackLayout Grid.Column="0" VerticalOptions="Center">
                     <Label Text="Total Price"
                            TextColor="{AppThemeBinding Light={StaticResource TextSecondaryColor}, Dark={StaticResource TextSecondaryColorDark}}"
                            FontFamily="Montserrat-Regular"
                            FontSize="14" />
 
-                    <!-- Named PriceLabel for code-behind (UpdatePrice) -->
+                    <!-- Price label is named for code-behind updates -->
                     <Label x:Name="PriceLabel"
                            Text="$14.99"
                            TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, Dark={StaticResource TextPrimaryColorDark}}"
@@ -374,7 +374,7 @@
                            FontSize="24" />
                 </StackLayout>
 
-                <!-- "Add to Cart" Button references your code-behind OnAddToCartClicked -->
+                <!-- "Add to Cart" Button triggers OnAddToCartClicked in code-behind -->
                 <Button Grid.Column="1"
                         Text="Add to Cart"
                         Style="{StaticResource PrimaryButton}"

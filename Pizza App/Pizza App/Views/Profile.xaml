@@ -1,4 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
+<!--
+  This ContentPage defines the Profile view for the Pizza_App.
+  It displays the user's profile information (picture, name, email) with a gradient header,
+  followed by several sections containing personal info, payment methods, app settings, and a logout button.
+-->
 <ContentPage 
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -6,14 +11,18 @@
     Title="Profile"
     BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColor}, Dark={StaticResource BackgroundColorDark}}">
 
+    <!-- Grid layout with two rows:
+         Row 0: Header with profile picture and basic info.
+         Row 1: Scrollable content for profile options.
+    -->
     <Grid RowDefinitions="Auto,*">
-        <!-- Header with Profile Info (Gradient) -->
+        <!-- HEADER SECTION: Contains a gradient background with the user's profile image and basic details -->
         <Frame Grid.Row="0"
                HeightRequest="200"
                CornerRadius="0"
                HasShadow="False"
                Padding="0">
-            <!-- Gradient Background -->
+            <!-- Gradient background using a LinearGradientBrush -->
             <Frame.Background>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                     <GradientStop 
@@ -25,6 +34,7 @@
                 </LinearGradientBrush>
             </Frame.Background>
 
+            <!-- Grid used as an overlay container -->
             <Grid>
                 <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
                     <!-- Circular Profile Picture -->
@@ -40,6 +50,7 @@
                                Aspect="AspectFill" />
                     </Frame>
 
+                    <!-- User's Name -->
                     <Label Text="John Doe"
                            TextColor="White"
                            FontFamily="Montserrat-Bold"
@@ -47,6 +58,7 @@
                            HorizontalOptions="Center"
                            Margin="0,10,0,0" />
 
+                    <!-- User's Email -->
                     <Label Text="john.doe@example.com"
                            TextColor="White"
                            FontFamily="Montserrat-Regular"
@@ -57,24 +69,24 @@
             </Grid>
         </Frame>
 
-        <!-- Profile Options -->
+        <!-- PROFILE OPTIONS SECTION: Scrollable list of various profile settings -->
         <ScrollView Grid.Row="1">
             <StackLayout Padding="20,20,20,20" Spacing="15">
-
-                <!-- Personal Information -->
+                <!-- PERSONAL INFORMATION FRAME -->
                 <Frame CornerRadius="15"
                        Padding="15"
                        HasShadow="True"
                        BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColor}, Dark={StaticResource SurfaceColorDark}}">
-
                     <StackLayout Spacing="15">
+                        <!-- Section header -->
                         <Label Text="Personal Information"
                                FontFamily="Montserrat-Bold"
                                FontSize="18"
                                TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, Dark={StaticResource TextPrimaryColorDark}}" />
 
+                        <!-- Grid for personal details: Phone, Address, Member Since -->
                         <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto" RowSpacing="15">
-                            <!-- Phone -->
+                            <!-- Phone number -->
                             <Image Grid.Row="0" Grid.Column="0"
                                    Source="phone.png"
                                    HeightRequest="24"
@@ -98,7 +110,7 @@
                                    VerticalOptions="Center"
                                    Margin="15,0,0,0" />
 
-                            <!-- Member Since -->
+                            <!-- Member since -->
                             <Image Grid.Row="2" Grid.Column="0"
                                    Source="calendar.png"
                                    HeightRequest="24"
@@ -111,28 +123,30 @@
                                    Margin="15,0,0,0" />
                         </Grid>
 
+                        <!-- Button to edit personal information -->
                         <Button Text="Edit Profile"
                                 Style="{StaticResource PrimaryButton}"
                                 Margin="0,10,0,0" />
                     </StackLayout>
                 </Frame>
 
-                <!-- Payment Methods -->
+                <!-- PAYMENT METHODS FRAME -->
                 <Frame CornerRadius="15"
                        Padding="15"
                        HasShadow="True"
                        BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColor}, Dark={StaticResource SurfaceColorDark}}">
-
                     <StackLayout Spacing="15">
+                        <!-- Section header -->
                         <Label Text="Payment Methods"
                                FontFamily="Montserrat-Bold"
                                FontSize="18"
                                TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, Dark={StaticResource TextPrimaryColorDark}}" />
 
+                        <!-- Grid for displaying payment method details -->
                         <Grid ColumnDefinitions="Auto,*,Auto"
                               RowDefinitions="Auto,Auto"
                               RowSpacing="15">
-                            <!-- Credit Card -->
+                            <!-- Credit Card details -->
                             <Image Grid.Row="0" Grid.Column="0"
                                    Source="credit_card.png"
                                    HeightRequest="24"
@@ -153,7 +167,7 @@
                                    TextColor="{AppThemeBinding Light={StaticResource PrimaryColor}, Dark={StaticResource PrimaryColorDark}}"
                                    VerticalOptions="Center" />
 
-                            <!-- PayPal -->
+                            <!-- PayPal details -->
                             <Image Grid.Row="1" Grid.Column="0"
                                    Source="paypal.png"
                                    HeightRequest="24"
@@ -166,28 +180,30 @@
                                    Margin="15,0,0,0" />
                         </Grid>
 
+                        <!-- Button to add a new payment method -->
                         <Button Text="Add Payment Method"
                                 Style="{StaticResource PrimaryButton}"
                                 Margin="0,10,0,0" />
                     </StackLayout>
                 </Frame>
 
-                <!-- App Settings -->
+                <!-- APP SETTINGS FRAME -->
                 <Frame CornerRadius="15"
                        Padding="15"
                        HasShadow="True"
                        BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColor}, Dark={StaticResource SurfaceColorDark}}">
-
                     <StackLayout Spacing="15">
+                        <!-- Section header -->
                         <Label Text="App Settings"
                                FontFamily="Montserrat-Bold"
                                FontSize="18"
                                TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, Dark={StaticResource TextPrimaryColorDark}}" />
 
+                        <!-- Grid for app settings options -->
                         <Grid ColumnDefinitions="*,Auto"
                               RowDefinitions="Auto,Auto,Auto"
                               RowSpacing="15">
-                            <!-- Notifications -->
+                            <!-- Notifications setting -->
                             <Label Grid.Row="0" Grid.Column="0"
                                    Text="Notifications"
                                    FontFamily="Montserrat-SemiBold"
@@ -197,7 +213,7 @@
                                     IsToggled="True"
                                     OnColor="{AppThemeBinding Light={StaticResource PrimaryColor}, Dark={StaticResource PrimaryColorDark}}" />
 
-                            <!-- Dark Mode -->
+                            <!-- Dark Mode setting -->
                             <Label Grid.Row="1" Grid.Column="0"
                                    Text="Dark Mode"
                                    FontFamily="Montserrat-SemiBold"
@@ -208,7 +224,7 @@
                                     OnColor="{AppThemeBinding Light={StaticResource PrimaryColor}, Dark={StaticResource PrimaryColorDark}}"
                                     Toggled="OnDarkModeToggled" />
 
-                            <!-- Location Services -->
+                            <!-- Location Services setting -->
                             <Label Grid.Row="2" Grid.Column="0"
                                    Text="Location Services"
                                    FontFamily="Montserrat-SemiBold"
@@ -221,7 +237,7 @@
                     </StackLayout>
                 </Frame>
 
-                <!-- Logout Button -->
+                <!-- LOGOUT BUTTON -->
                 <Button Text="Logout"
                         Style="{StaticResource PrimaryButton}"
                         Margin="0,10,0,0" />

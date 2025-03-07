@@ -2,17 +2,15 @@
 <Application xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Pizza_App.App">
-    <!--
-        Define global resources and styles here, that apply to all pages in your app.
+
+    <!-- 
+      These are global resources and styles that apply throughout the app. 
+      Colors and styles are defined for both Light and Dark themes. 
     -->
     <Application.Resources>
         <ResourceDictionary>
 
-            <!-- 
-              ─────────────────────────────────────────────────────────
-               LIGHT THEME COLORS
-              ─────────────────────────────────────────────────────────
-            -->
+            <!-- Light Theme Colors -->
             <Color x:Key="PrimaryColor">#E53935</Color>
             <Color x:Key="PrimaryDarkColor">#B71C1C</Color>
             <Color x:Key="AccentColor">#FF5252</Color>
@@ -23,11 +21,7 @@
             <Color x:Key="BorderColor">#E0E0E0</Color>
             <Color x:Key="CardShadowColor">#20000000</Color>
 
-            <!-- 
-              ─────────────────────────────────────────────────────────
-               DARK THEME COLORS
-              ─────────────────────────────────────────────────────────
-            -->
+            <!-- Dark Theme Colors -->
             <Color x:Key="PrimaryColorDark">#FF5252</Color>
             <Color x:Key="PrimaryDarkColorDark">#B71C1C</Color>
             <Color x:Key="AccentColorDark">#FF8A80</Color>
@@ -38,18 +32,12 @@
             <Color x:Key="BorderColorDark">#333333</Color>
             <Color x:Key="CardShadowColorDark">#40000000</Color>
 
-            <!-- 
-              ─────────────────────────────────────────────────────────
-               TEXT STYLES
-              ─────────────────────────────────────────────────────────
-            -->
+            <!-- Label Styles for Headers and Body Text -->
             <Style TargetType="Label" x:Key="HeaderLabel">
                 <Setter Property="FontSize" Value="24" />
-                <!-- Example custom font -->
                 <Setter Property="FontFamily" Value="Montserrat-Bold" />
                 <Setter Property="TextColor" 
-                        Value="{AppThemeBinding Light={StaticResource TextPrimaryColor},
-                                                Dark={StaticResource TextPrimaryColorDark}}" />
+                        Value="{AppThemeBinding Light={StaticResource TextPrimaryColor}, Dark={StaticResource TextPrimaryColorDark}}" />
                 <Setter Property="Margin" Value="20,20,20,10" />
             </Style>
 
@@ -57,8 +45,7 @@
                 <Setter Property="FontSize" Value="18" />
                 <Setter Property="FontFamily" Value="Montserrat-SemiBold" />
                 <Setter Property="TextColor"
-                        Value="{AppThemeBinding Light={StaticResource TextPrimaryColor},
-                                                Dark={StaticResource TextPrimaryColorDark}}" />
+                        Value="{AppThemeBinding Light={StaticResource TextPrimaryColor}, Dark={StaticResource TextPrimaryColorDark}}" />
                 <Setter Property="Margin" Value="20,10,20,5" />
             </Style>
 
@@ -66,20 +53,14 @@
                 <Setter Property="FontSize" Value="14" />
                 <Setter Property="FontFamily" Value="Montserrat-Regular" />
                 <Setter Property="TextColor"
-                        Value="{AppThemeBinding Light={StaticResource TextSecondaryColor},
-                                                Dark={StaticResource TextSecondaryColorDark}}" />
+                        Value="{AppThemeBinding Light={StaticResource TextSecondaryColor}, Dark={StaticResource TextSecondaryColorDark}}" />
                 <Setter Property="Margin" Value="20,5,20,5" />
             </Style>
 
-            <!-- 
-              ─────────────────────────────────────────────────────────
-               BUTTON STYLES (PRIMARY & SECONDARY)
-              ─────────────────────────────────────────────────────────
-            -->
+            <!-- Button Styles (Primary and Secondary) -->
             <Style TargetType="Button" x:Key="PrimaryButton">
                 <Setter Property="BackgroundColor" 
-                        Value="{AppThemeBinding Light={StaticResource PrimaryColor},
-                                                Dark={StaticResource PrimaryColorDark}}" />
+                        Value="{AppThemeBinding Light={StaticResource PrimaryColor}, Dark={StaticResource PrimaryColorDark}}" />
                 <Setter Property="TextColor" Value="White" />
                 <Setter Property="FontFamily" Value="Montserrat-SemiBold" />
                 <Setter Property="FontSize" Value="16" />
@@ -91,56 +72,40 @@
             <Style TargetType="Button" x:Key="SecondaryButton">
                 <Setter Property="BackgroundColor" Value="Transparent" />
                 <Setter Property="TextColor"
-                        Value="{AppThemeBinding Light={StaticResource PrimaryColor},
-                                                Dark={StaticResource PrimaryColorDark}}" />
+                        Value="{AppThemeBinding Light={StaticResource PrimaryColor}, Dark={StaticResource PrimaryColorDark}}" />
                 <Setter Property="FontFamily" Value="Montserrat-SemiBold" />
                 <Setter Property="FontSize" Value="16" />
                 <Setter Property="BorderColor"
-                        Value="{AppThemeBinding Light={StaticResource PrimaryColor},
-                                                Dark={StaticResource PrimaryColorDark}}" />
+                        Value="{AppThemeBinding Light={StaticResource PrimaryColor}, Dark={StaticResource PrimaryColorDark}}" />
                 <Setter Property="BorderWidth" Value="1" />
                 <Setter Property="CornerRadius" Value="25" />
                 <Setter Property="Padding" Value="20,10" />
                 <Setter Property="Margin" Value="20,10" />
             </Style>
 
-            <!-- 
-              ─────────────────────────────────────────────────────────
-               ENTRY & FRAME STYLES
-              ─────────────────────────────────────────────────────────
-            -->
+            <!-- Entry and Frame Styles -->
             <Style TargetType="Entry">
                 <Setter Property="FontFamily" Value="Montserrat-Regular" />
                 <Setter Property="FontSize" Value="16" />
                 <Setter Property="TextColor"
-                        Value="{AppThemeBinding Light={StaticResource TextPrimaryColor},
-                                                Dark={StaticResource TextPrimaryColorDark}}" />
+                        Value="{AppThemeBinding Light={StaticResource TextPrimaryColor}, Dark={StaticResource TextPrimaryColorDark}}" />
                 <Setter Property="BackgroundColor"
-                        Value="{AppThemeBinding Light={StaticResource SurfaceColor},
-                                                Dark={StaticResource SurfaceColorDark}}" />
+                        Value="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource SurfaceColorDark}}" />
                 <Setter Property="Margin" Value="20,5" />
             </Style>
 
             <Style TargetType="Frame">
                 <Setter Property="BackgroundColor"
-                        Value="{AppThemeBinding Light={StaticResource BackgroundColor},
-                                                Dark={StaticResource SurfaceColorDark}}" />
+                        Value="{AppThemeBinding Light={StaticResource BackgroundColor}, Dark={StaticResource SurfaceColorDark}}" />
                 <Setter Property="BorderColor"
-                        Value="{AppThemeBinding Light={StaticResource BorderColor},
-                                                Dark={StaticResource BorderColorDark}}" />
+                        Value="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource BorderColorDark}}" />
                 <Setter Property="CornerRadius" Value="10" />
                 <Setter Property="HasShadow" Value="True" />
                 <Setter Property="Margin" Value="15,10" />
                 <Setter Property="Padding" Value="15" />
             </Style>
 
-            <!-- 
-              ─────────────────────────────────────────────────────────
-               YOUR ORIGINAL DEFAULT BUTTON STYLE (VISUAL STATES)
-               Updated to use 'PrimaryColor' for Normal state
-               and a 20% alpha for Disabled state.
-              ─────────────────────────────────────────────────────────
-            -->
+            <!-- Original Default Button Style (Visual States) -->
             <Style TargetType="Button">
                 <Setter Property="TextColor" Value="White" />
                 <Setter Property="VisualStateManager.VisualStateGroups">
@@ -148,13 +113,13 @@
                         <VisualStateGroup x:Name="CommonStates">
                             <VisualState x:Name="Normal">
                                 <VisualState.Setters>
-                                    <!-- Use the new PrimaryColor resource -->
+                                    <!-- Uses 'PrimaryColor' resource -->
                                     <Setter Property="BackgroundColor" Value="{StaticResource PrimaryColor}" />
                                 </VisualState.Setters>
                             </VisualState>
                             <VisualState x:Name="Disabled">
                                 <VisualState.Setters>
-                                    <!-- 20% alpha version of #E53935 -->
+                                    <!-- 20% alpha of #E53935 -->
                                     <Setter Property="BackgroundColor" Value="#33E53935" />
                                 </VisualState.Setters>
                             </VisualState>

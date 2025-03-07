@@ -1,43 +1,50 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
+<!--
+  This ContentPage defines the Checkout view for the Pizza_App.
+  It allows users to enter contact, delivery, and payment information
+  before placing their order.
+-->
 <ContentPage 
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-   xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps"
+    xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps"
     x:Class="Pizza_App.Views.Checkout"
     Title="Checkout"
     BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColor}, Dark={StaticResource BackgroundColorDark}}">
 
     <!-- 
-      Layout: 3 rows
-      Row 0: Header
-      Row 1: ScrollView with contact/delivery/payment frames
-      Row 2: Bottom bar with "Place Order" 
+      Main Grid Layout divided into three rows:
+      Row 0: Header section with title and subtitle.
+      Row 1: Scrollable form containing contact information, delivery address, and payment method.
+      Row 2: Bottom bar with order total and "Place Order" button.
     -->
     <Grid RowDefinitions="Auto,*,Auto">
 
-        <!-- Header -->
+        <!-- HEADER SECTION -->
         <StackLayout Grid.Row="0" Padding="20,10">
+            <!-- Main header title -->
             <Label Text="Checkout" 
                    Style="{StaticResource HeaderLabel}" />
+            <!-- Subtitle prompting the user to complete the order -->
             <Label Text="Complete your order" 
                    Style="{StaticResource BodyLabel}" />
         </StackLayout>
 
-        <!-- Checkout Form -->
+        <!-- CHECKOUT FORM SECTION -->
         <ScrollView Grid.Row="1">
             <StackLayout Padding="20,0,20,20" Spacing="15">
 
-                <!-- CONTACT INFORMATION -->
+                <!-- CONTACT INFORMATION FRAME -->
                 <Frame CornerRadius="15" Padding="15" HasShadow="True"
                        BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColor}, 
                                                          Dark={StaticResource SurfaceColorDark}}">
                     <StackLayout Spacing="10">
+                        <!-- Section header for contact information -->
                         <Label Text="Contact Information" 
                                FontFamily="Montserrat-Bold" FontSize="18"
                                TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, Dark={StaticResource TextPrimaryColorDark}}" />
-
                         <StackLayout Spacing="15">
-                            <!-- Full Name -->
+                            <!-- Full Name Input -->
                             <StackLayout>
                                 <Label Text="Full Name" 
                                        FontFamily="Montserrat-SemiBold" FontSize="14"
@@ -51,7 +58,7 @@
                                 </Frame>
                             </StackLayout>
 
-                            <!-- Phone Number -->
+                            <!-- Phone Number Input -->
                             <StackLayout>
                                 <Label Text="Phone Number" 
                                        FontFamily="Montserrat-SemiBold" FontSize="14"
@@ -66,7 +73,7 @@
                                 </Frame>
                             </StackLayout>
 
-                            <!-- Email -->
+                            <!-- Email Input -->
                             <StackLayout>
                                 <Label Text="Email" 
                                        FontFamily="Montserrat-SemiBold" FontSize="14"
@@ -84,17 +91,17 @@
                     </StackLayout>
                 </Frame>
 
-                <!-- DELIVERY ADDRESS -->
+                <!-- DELIVERY ADDRESS FRAME -->
                 <Frame CornerRadius="15" Padding="15" HasShadow="True"
                        BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColor}, 
                                                          Dark={StaticResource SurfaceColorDark}}">
                     <StackLayout Spacing="10">
+                        <!-- Section header for delivery address -->
                         <Label Text="Delivery Address" 
                                FontFamily="Montserrat-Bold" FontSize="18"
                                TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, Dark={StaticResource TextPrimaryColorDark}}" />
-
                         <StackLayout Spacing="15">
-                            <!-- Street Address -->
+                            <!-- Street Address Input -->
                             <StackLayout>
                                 <Label Text="Street Address"
                                        FontFamily="Montserrat-SemiBold" FontSize="14"
@@ -108,7 +115,7 @@
                                 </Frame>
                             </StackLayout>
 
-                            <!-- Apartment/Suite -->
+                            <!-- Apartment/Suite Input (Optional) -->
                             <StackLayout>
                                 <Label Text="Apartment/Suite (Optional)"
                                        FontFamily="Montserrat-SemiBold" FontSize="14"
@@ -122,8 +129,9 @@
                                 </Frame>
                             </StackLayout>
 
-                            <!-- City & Zip Code -->
+                            <!-- City and Zip Code Inputs in a Grid -->
                             <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                                <!-- City Input -->
                                 <StackLayout Grid.Column="0">
                                     <Label Text="City"
                                            FontFamily="Montserrat-SemiBold" FontSize="14"
@@ -137,6 +145,7 @@
                                     </Frame>
                                 </StackLayout>
 
+                                <!-- Zip Code Input -->
                                 <StackLayout Grid.Column="1">
                                     <Label Text="Zip Code"
                                            FontFamily="Montserrat-SemiBold" FontSize="14"
@@ -152,33 +161,36 @@
                                 </StackLayout>
                             </Grid>
 
-                            <!-- Map for selecting location -->
+                            <!-- Map for Location Selection -->
                             <Label Text="Select Location on Map"
                                    FontFamily="Montserrat-SemiBold" FontSize="14"
                                    TextColor="{AppThemeBinding Light={StaticResource TextSecondaryColor}, Dark={StaticResource TextSecondaryColorDark}}" />
-
                             <Frame Padding="0" HasShadow="False" CornerRadius="15" HeightRequest="200">
+                                <!-- Map control to allow users to pick their delivery location -->
                                 <maps:Map x:Name="DeliveryMap" IsShowingUser="True" />
                             </Frame>
                         </StackLayout>
                     </StackLayout>
                 </Frame>
 
-                <!-- PAYMENT METHOD -->
+                <!-- PAYMENT METHOD FRAME -->
                 <Frame CornerRadius="15" Padding="15" HasShadow="True"
                        BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColor}, 
                                                          Dark={StaticResource SurfaceColorDark}}">
                     <StackLayout Spacing="10">
+                        <!-- Section header for payment method -->
                         <Label Text="Payment Method" 
                                FontFamily="Montserrat-Bold" FontSize="18"
                                TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, Dark={StaticResource TextPrimaryColorDark}}" />
-
                         <StackLayout Spacing="10">
+                            <!-- Payment option: Credit Card -->
                             <RadioButton Content="Credit Card"
                                          TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, Dark={StaticResource TextPrimaryColorDark}}"
                                          IsChecked="True" />
+                            <!-- Payment option: Cash on Delivery -->
                             <RadioButton Content="Cash on Delivery"
                                          TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, Dark={StaticResource TextPrimaryColorDark}}" />
+                            <!-- Payment option: PayPal -->
                             <RadioButton Content="PayPal"
                                          TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, Dark={StaticResource TextPrimaryColorDark}}" />
                         </StackLayout>
@@ -188,14 +200,15 @@
             </StackLayout>
         </ScrollView>
 
-        <!-- PLACE ORDER BUTTON (BOTTOM BAR) -->
+        <!-- BOTTOM BAR: PLACE ORDER BUTTON -->
         <Frame Grid.Row="2" Padding="20" HasShadow="True"
                BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource SurfaceColorDark}}">
             <!-- 
-              If you want a gradient, you can use Frame.Background 
-              with <LinearGradientBrush>.
+              The bottom bar displays the order total and a "Place Order" button.
+              A gradient background can be applied if desired using a LinearGradientBrush.
             -->
             <Grid ColumnDefinitions="*,Auto">
+                <!-- Order Total Information -->
                 <StackLayout Grid.Column="0" VerticalOptions="Center">
                     <Label Text="Total" 
                            TextColor="{AppThemeBinding Light={StaticResource TextSecondaryColor}, Dark={StaticResource TextSecondaryColorDark}}"
@@ -204,7 +217,7 @@
                            TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, Dark={StaticResource TextPrimaryColorDark}}"
                            FontFamily="Montserrat-Bold" FontSize="24" />
                 </StackLayout>
-
+                <!-- Place Order Button -->
                 <Frame Grid.Column="1"
                        CornerRadius="25"
                        Padding="20,15"
@@ -213,10 +226,12 @@
                        HorizontalOptions="End"
                        VerticalOptions="Center">
                     <StackLayout Orientation="Horizontal" Spacing="10">
+                        <!-- Activity indicator shown while order is being processed -->
                         <ActivityIndicator x:Name="OrderActivityIndicator" 
                                            IsRunning="False" 
                                            Color="White" 
                                            IsVisible="False" />
+                        <!-- Place Order text label -->
                         <Label Text="Place Order" 
                                TextColor="White" 
                                FontFamily="Montserrat-Bold" 

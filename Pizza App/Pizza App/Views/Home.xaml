@@ -1,4 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
+<!--
+  This ContentPage defines the Home view for the Pizza_App.
+  It includes a header with search and filter controls, scrollable content for categories and pizzas,
+  and a floating cart button at the bottom-right.
+-->
 <ContentPage 
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -6,10 +11,16 @@
     Title="Pizza Time"
     BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColor}, Dark={StaticResource BackgroundColorDark}}">
 
-    <!-- ResourceDictionary for styling the "cards" -->
+    <!-- 
+      ResourceDictionary for styling reusable components within the page,
+      such as the "pizza cards" used in the pizza listings.
+    -->
     <ContentPage.Resources>
         <ResourceDictionary>
-            <!-- Style for pizza "cards" -->
+            <!-- 
+              PizzaCardStyle: A style applied to Frame elements to create a consistent look for pizza cards.
+              It defines background colors (with theme support), rounded corners, margin, fixed dimensions, and a drop shadow.
+            -->
             <Style x:Key="PizzaCardStyle" TargetType="Frame">
                 <Setter Property="BackgroundColor" 
                         Value="{AppThemeBinding Light={StaticResource BackgroundColor},
@@ -18,29 +29,32 @@
                 <Setter Property="Margin" Value="10" />
                 <Setter Property="HeightRequest" Value="220" />
                 <Setter Property="WidthRequest" Value="180" />
-                <!-- Basic shadow -->
                 <Setter Property="HasShadow" Value="True" />
             </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
 
     <!-- 
-      Main layout: 3 rows
-      Row 0: Search & Filter
-      Row 1: Scrollable content (Categories, Popular Pizzas, Recommended)
-      Row 2: Floating Cart Button at bottom-right
+      Main Layout using a Grid with three rows:
+      Row 0: Header with search and filter controls.
+      Row 1: Scrollable content that includes categories, popular pizzas, and recommended pizzas.
+      Row 2: Floating Cart Button located at the bottom-right corner.
     -->
     <Grid RowDefinitions="Auto,*,Auto">
 
-        <!-- 1) Header with Search Bar & Filter Button -->
+        <!-- 
+          Header Section (Row 0): Contains the search bar and filter button.
+          This grid has two columns: one for the search bar and one for the filter button.
+        -->
         <Grid Grid.Row="0" Padding="15" ColumnDefinitions="*,Auto">
-            <!-- Search Bar Frame -->
+            <!-- Search Bar Container (Frame) -->
             <Frame Grid.Column="0"
                    Padding="5"
                    CornerRadius="25"
                    HasShadow="False"
                    BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor},
                                                     Dark={StaticResource SurfaceColorDark}}">
+                <!-- Grid to layout the search icon and search entry horizontally -->
                 <Grid ColumnDefinitions="Auto,*">
                     <!-- Search Icon -->
                     <Image Grid.Column="0"
@@ -49,7 +63,7 @@
                            WidthRequest="20"
                            Margin="10,0"
                            VerticalOptions="Center" />
-                    <!-- Search Entry -->
+                    <!-- Search Input Field -->
                     <Entry Grid.Column="1"
                            Placeholder="Search for pizzas..."
                            PlaceholderColor="{AppThemeBinding Light={StaticResource TextSecondaryColor}, 
@@ -72,19 +86,23 @@
                     Padding="15,0" />
         </Grid>
 
-        <!-- 2) Scrollable Content (Categories, Popular, Recommended) -->
+        <!-- 
+          Scrollable Content Section (Row 1): Displays categories, popular pizzas, and recommended pizzas.
+          Wrapped inside a ScrollView to allow vertical scrolling.
+        -->
         <ScrollView Grid.Row="1">
             <StackLayout Spacing="0">
 
-                <!-- Categories -->
+                <!-- Categories Header -->
                 <Label Text="Categories" 
                        Style="{StaticResource SubHeaderLabel}"
                        Margin="10,10,0,0"/>
+                <!-- Horizontal ScrollView for category buttons -->
                 <ScrollView Orientation="Horizontal"
                             Margin="10,0"
                             HorizontalScrollBarVisibility="Never">
                     <StackLayout Orientation="Horizontal" Spacing="10">
-                        <!-- Example Category: All -->
+                        <!-- Category: All -->
                         <Frame CornerRadius="20"
                                Padding="15,10"
                                BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryColor}, 
@@ -95,7 +113,7 @@
                                    FontFamily="Montserrat-SemiBold" />
                         </Frame>
 
-                        <!-- Other Categories -->
+                        <!-- Category: Popular -->
                         <Frame CornerRadius="20"
                                Padding="15,10"
                                BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, 
@@ -107,6 +125,7 @@
                                                             Dark={StaticResource TextPrimaryColorDark}}" />
                         </Frame>
 
+                        <!-- Category: Vegetarian -->
                         <Frame CornerRadius="20"
                                Padding="15,10"
                                BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, 
@@ -118,6 +137,7 @@
                                                             Dark={StaticResource TextPrimaryColorDark}}" />
                         </Frame>
 
+                        <!-- Category: Meat Lovers -->
                         <Frame CornerRadius="20"
                                Padding="15,10"
                                BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, 
@@ -131,7 +151,7 @@
                     </StackLayout>
                 </ScrollView>
 
-                <!-- Popular Pizzas -->
+                <!-- Popular Pizzas Header with "See All" option -->
                 <Grid Margin="15,20,15,0">
                     <Label Text="Popular Pizzas" 
                            Style="{StaticResource SubHeaderLabel}"
@@ -144,11 +164,12 @@
                            VerticalOptions="Center" />
                 </Grid>
 
-                <!-- CollectionView for Popular Pizzas -->
+                <!-- Horizontal CollectionView for Popular Pizzas -->
                 <CollectionView x:Name="PizzaCollectionView"
                                 ItemsLayout="HorizontalList"
                                 Margin="0,10"
                                 HeightRequest="240">
+                    <!-- Static array of pizza names for demonstration -->
                     <CollectionView.ItemsSource>
                         <x:Array Type="{x:Type x:String}">
                             <x:String>Pepperoni</x:String>
@@ -158,26 +179,27 @@
                             <x:String>BBQ Chicken</x:String>
                         </x:Array>
                     </CollectionView.ItemsSource>
+                    <!-- DataTemplate defining the layout of each pizza card -->
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <Frame Style="{StaticResource PizzaCardStyle}">
+                                <!-- Gesture Recognizer for tap actions on the pizza card -->
                                 <Frame.GestureRecognizers>
                                     <!-- 
-                                      Taps on this card will call OnPizzaTapped in Home.xaml.cs.
-                                      In real usage, pass a unique pizza ID via CommandParameter. 
+                                      Tapping the card calls the OnPizzaTapped handler in the code-behind.
+                                      CommandParameter passes the bound data (pizza name) for further processing.
                                     -->
                                     <TapGestureRecognizer Tapped="OnPizzaTapped" 
                                                           CommandParameter="{Binding .}" />
                                 </Frame.GestureRecognizers>
 
+                                <!-- Layout for pizza details -->
                                 <Grid RowDefinitions="*,Auto,Auto,Auto" Padding="10">
-                                    <!-- 
-                                      Replace "pizza_placeholder.jpg" with actual .jpg 
-                                      if you have e.g. pizza_pepperoni.jpg for each item 
-                                    -->
+                                    <!-- Pizza Image -->
                                     <Image Grid.Row="0"
                                            Source="pizza_placeholder.jpg"
                                            Aspect="AspectFill" />
+                                    <!-- Pizza Name -->
                                     <Label Grid.Row="1"
                                            Text="{Binding .}"
                                            FontFamily="Montserrat-Bold"
@@ -185,6 +207,7 @@
                                            TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, 
                                                                       Dark={StaticResource TextPrimaryColorDark}}"
                                            Margin="0,10,0,5" />
+                                    <!-- Pizza Description -->
                                     <Label Grid.Row="2"
                                            Text="Classic hand-tossed pizza"
                                            FontFamily="Montserrat-Regular"
@@ -193,9 +216,11 @@
                                                                       Dark={StaticResource TextSecondaryColorDark}}"
                                            LineBreakMode="TailTruncation"
                                            MaxLines="1" />
+                                    <!-- Price and Add Button -->
                                     <Grid Grid.Row="3"
                                           ColumnDefinitions="*,Auto"
                                           Margin="0,10,0,0">
+                                        <!-- Pizza Price -->
                                         <Label Grid.Column="0"
                                                Text="$12.99"
                                                FontFamily="Montserrat-Bold"
@@ -203,8 +228,9 @@
                                                TextColor="{AppThemeBinding Light={StaticResource PrimaryColor}, 
                                                                           Dark={StaticResource PrimaryColorDark}}"
                                                VerticalOptions="Center" />
+                                        <!-- Add Button -->
                                         <Button Grid.Column="1"
-                                                Text="+"
+                                                Text="+" 
                                                 FontSize="18"
                                                 FontAttributes="Bold"
                                                 BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryColor}, 
@@ -222,7 +248,7 @@
                     </CollectionView.ItemTemplate>
                 </CollectionView>
 
-                <!-- Recommended Pizzas -->
+                <!-- Recommended Pizzas Header with "See All" option -->
                 <Grid Margin="15,10,15,0">
                     <Label Text="Recommended"
                            Style="{StaticResource SubHeaderLabel}"
@@ -235,7 +261,9 @@
                            VerticalOptions="Center" />
                 </Grid>
 
+                <!-- CollectionView for Recommended Pizzas -->
                 <CollectionView Margin="10">
+                    <!-- Static array of recommended pizza names for demonstration -->
                     <CollectionView.ItemsSource>
                         <x:Array Type="{x:Type x:String}">
                             <x:String>Veggie Delight</x:String>
@@ -243,6 +271,7 @@
                             <x:String>Buffalo Chicken</x:String>
                         </x:Array>
                     </CollectionView.ItemsSource>
+                    <!-- DataTemplate for each recommended pizza card -->
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <Frame CornerRadius="15"
@@ -250,32 +279,32 @@
                                    HasShadow="True"
                                    BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColor},
                                                                   Dark={StaticResource SurfaceColorDark}}">
-
                                 <Grid ColumnDefinitions="Auto,*,Auto"
                                       Padding="10">
-                                    <!-- 
-                                      Replace "pizza_placeholder.jpg" with actual .jpg 
-                                      if you have e.g. pizza_veggiedelight.jpg 
-                                    -->
+                                    <!-- Pizza Image -->
                                     <Image Grid.Column="0"
                                            Source="pizza_placeholder.jpg"
                                            HeightRequest="80"
                                            WidthRequest="80"
                                            Aspect="AspectFill"
                                            VerticalOptions="Center" />
+                                    <!-- Pizza Details -->
                                     <StackLayout Grid.Column="1"
                                                  VerticalOptions="Center"
                                                  Margin="15,0">
+                                        <!-- Pizza Name -->
                                         <Label Text="{Binding .}"
                                                FontFamily="Montserrat-Bold"
                                                FontSize="16"
                                                TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor},
                                                                       Dark={StaticResource TextPrimaryColorDark}}" />
+                                        <!-- Short Description -->
                                         <Label Text="Fresh and delicious"
                                                FontFamily="Montserrat-Regular"
                                                FontSize="12"
                                                TextColor="{AppThemeBinding Light={StaticResource TextSecondaryColor},
                                                                       Dark={StaticResource TextSecondaryColorDark}}" />
+                                        <!-- Pizza Price -->
                                         <Label Text="$14.99"
                                                FontFamily="Montserrat-Bold"
                                                FontSize="16"
@@ -283,8 +312,9 @@
                                                TextColor="{AppThemeBinding Light={StaticResource PrimaryColor},
                                                                       Dark={StaticResource PrimaryColorDark}}" />
                                     </StackLayout>
+                                    <!-- Add Button for recommended pizza -->
                                     <Button Grid.Column="2"
-                                            Text="+"
+                                            Text="+" 
                                             FontSize="18"
                                             FontAttributes="Bold"
                                             BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryColor},
@@ -303,7 +333,10 @@
             </StackLayout>
         </ScrollView>
 
-        <!-- 3) Floating Cart Button -->
+        <!-- 
+          Floating Cart Button (Row 2):
+          Positioned at the bottom-right of the page to provide quick access to the cart.
+        -->
         <Frame Grid.Row="2"
                HorizontalOptions="End"
                VerticalOptions="End"
@@ -312,8 +345,11 @@
                HeightRequest="60"
                WidthRequest="60"
                HasShadow="True">
+            <!-- 
+              The background uses a LinearGradientBrush to create a gradient effect.
+              This requires Xamarin.Forms version 4.8 or later.
+            -->
             <Frame.Background>
-                <!-- LinearGradientBrush requires Xamarin.Forms 4.8+ -->
                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                     <GradientStop 
                         Color="{AppThemeBinding Light={StaticResource PrimaryColor}, 
@@ -325,12 +361,13 @@
                         Offset="1.0" />
                 </LinearGradientBrush>
             </Frame.Background>
+            <!-- Layout for the cart icon and badge -->
             <Grid>
                 <!-- Cart Icon -->
                 <Image Source="cart_white.png" 
                        HeightRequest="24" 
                        WidthRequest="24" />
-                <!-- Badge (example: 3 items) -->
+                <!-- Badge displaying the number of items (example: 3) -->
                 <Frame BackgroundColor="White"
                        CornerRadius="10"
                        HeightRequest="20"

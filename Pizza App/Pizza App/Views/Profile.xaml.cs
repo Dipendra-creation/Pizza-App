@@ -4,63 +4,78 @@ using Xamarin.Forms.Xaml;
 
 namespace Pizza_App.Views
 {
+    // Enable XAML compilation to improve performance and catch XAML-related errors at compile time.
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class Profile : ContentPage
     {
+        // Constructor: Initializes the Profile page and its components.
         public Profile()
         {
             InitializeComponent();
         }
 
-        // Called when the Dark Mode switch is toggled
+        /// <summary>
+        /// Event handler for when the Dark Mode switch is toggled.
+        /// In a real application, you might call a method to update the app's theme.
+        /// For now, it displays an alert showing whether dark mode is enabled.
+        /// </summary>
         private void OnDarkModeToggled(object sender, ToggledEventArgs e)
         {
-            // Example: Toggle dark mode in your app
-            // If you have a static method like App.ToggleDarkMode(), call it here.
-            // For demonstration:
+            // Retrieve the current toggle value (true if dark mode is enabled).
             bool isDarkMode = e.Value;
+            // Display an alert indicating the new state of dark mode.
             DisplayAlert("Dark Mode",
                 $"Dark mode toggled: {(isDarkMode ? "ON" : "OFF")}",
                 "OK");
 
-            // If you actually implement dark mode, do it here:
+            // If your app supports theme switching, you might call a method such as:
             // App.ToggleDarkMode(isDarkMode);
         }
 
-        // Called when user clicks "Edit Profile" button
+        /// <summary>
+        /// Event handler for when the "Edit Profile" button is clicked.
+        /// Currently, it displays a placeholder alert.
+        /// In a real application, it would navigate to or display a profile editing form.
+        /// </summary>
         private async void OnEditProfileClicked(object sender, EventArgs e)
         {
-            // For now, just show a placeholder alert
             await DisplayAlert("Edit Profile",
                 "Editing profile not implemented yet!",
                 "OK");
         }
 
-        // Called when user clicks "Add Payment Method" button
+        /// <summary>
+        /// Event handler for when the "Add Payment Method" button is clicked.
+        /// Currently, it displays a placeholder alert.
+        /// In a real application, it would launch a form or workflow for adding payment details.
+        /// </summary>
         private async void OnAddPaymentMethodClicked(object sender, EventArgs e)
         {
-            // Placeholder for adding payment method
             await DisplayAlert("Payment Method",
                 "Add payment method not implemented yet!",
                 "OK");
         }
 
-        // Called when user clicks "Logout" button
+        /// <summary>
+        /// Event handler for when the "Logout" button is clicked.
+        /// Asks the user for confirmation before performing logout logic.
+        /// Currently, it shows alerts and contains placeholder logic for logging out.
+        /// </summary>
         private async void OnLogoutClicked(object sender, EventArgs e)
         {
+            // Confirm the logout action with the user.
             bool confirm = await DisplayAlert("Logout",
                 "Are you sure you want to logout?",
                 "Yes", "No");
 
             if (confirm)
             {
-                // Perform actual logout logic here (e.g., clear user session, navigate to login)
-                // For now, just show an alert
+                // Placeholder for actual logout logic such as clearing user session data.
                 await DisplayAlert("Logged Out",
                     "You have been logged out.",
                     "OK");
 
-                // Example: navigate to a login page or root
+                // Example: Navigate to a login page or the app's root.
                 // await Shell.Current.GoToAsync("//login");
             }
         }

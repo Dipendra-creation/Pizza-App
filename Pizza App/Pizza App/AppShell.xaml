@@ -1,50 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  This XAML file defines the Shell for the Pizza_App application.
+  It sets up global styles, main navigation tabs, and additional pages.
+-->
 <Shell xmlns="http://xamarin.com/schemas/2014/forms" 
        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
        xmlns:local="clr-namespace:Pizza_App.Views"
        Title="Pizza_App"
        x:Class="Pizza_App.AppShell">
 
-    <!-- Shell styling -->
+    <!-- 
+      Define global styles and resources for the Shell.
+      These styles ensure consistent UI theming across the app.
+    -->
     <Shell.Resources>
         <ResourceDictionary>
+            <!-- BaseStyle defines common appearance settings for Shell elements -->
             <Style x:Key="BaseStyle" TargetType="Element">
-                <!-- Replace "PrimaryColor" with your chosen color resource key from App.xaml -->
+                <!-- Set the Shell background using a predefined resource (PrimaryColor) -->
                 <Setter Property="Shell.BackgroundColor" Value="{StaticResource PrimaryColor}" />
+                <!-- Set text and title colors -->
                 <Setter Property="Shell.ForegroundColor" Value="White" />
                 <Setter Property="Shell.TitleColor" Value="White" />
+                <!-- Set colors for disabled and unselected states -->
                 <Setter Property="Shell.DisabledColor" Value="#B4FFFFFF" />
                 <Setter Property="Shell.UnselectedColor" Value="#95FFFFFF" />
+                <!-- Configure TabBar appearance -->
                 <Setter Property="Shell.TabBarBackgroundColor" Value="{StaticResource PrimaryColor}" />
                 <Setter Property="Shell.TabBarForegroundColor" Value="White" />
                 <Setter Property="Shell.TabBarUnselectedColor" Value="#95FFFFFF" />
                 <Setter Property="Shell.TabBarTitleColor" Value="White" />
             </Style>
+            <!-- Apply the BaseStyle to TabBar elements -->
             <Style TargetType="TabBar" BasedOn="{StaticResource BaseStyle}" />
+            <!-- Apply the BaseStyle to FlyoutItem elements -->
             <Style TargetType="FlyoutItem" BasedOn="{StaticResource BaseStyle}" />
         </ResourceDictionary>
     </Shell.Resources>
 
-    <!-- Main tabs: Home, Cart, Orders, Profile -->
+    <!--
+      Define the main tab-based navigation for the app.
+      Each ShellContent element represents a tab with its own page and icon.
+    -->
     <TabBar>
+        <!-- Home tab -->
         <ShellContent 
             Title="Home" 
             Icon="home.png" 
             Route="home"
             ContentTemplate="{DataTemplate local:Home}" />
 
+        <!-- Cart tab -->
         <ShellContent 
             Title="Cart" 
             Icon="cart.png" 
             Route="cart"
             ContentTemplate="{DataTemplate local:Cart}" />
 
+        <!-- Orders tab -->
         <ShellContent 
             Title="Orders" 
             Icon="orders.png" 
             Route="orders"
             ContentTemplate="{DataTemplate local:OrderHistory}" />
 
+        <!-- Profile tab -->
         <ShellContent 
             Title="Profile" 
             Icon="profile.png" 
@@ -52,13 +72,20 @@
             ContentTemplate="{DataTemplate local:Profile}" />
     </TabBar>
 
-    <!-- Additional pages for in-app navigation -->
+    <!--
+      Additional pages that are not part of the main tab bar but
+      can be navigated to from within the app.
+    -->
+    <!-- Page for customizing a pizza -->
     <ShellContent 
         Route="customization" 
         ContentTemplate="{DataTemplate local:PizzaCustomization}" />
 
+    <!-- Checkout page -->
     <ShellContent 
         Route="checkout" 
         ContentTemplate="{DataTemplate local:Checkout}" />
 
 </Shell>
+
+    
