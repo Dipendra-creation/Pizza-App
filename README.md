@@ -1,75 +1,85 @@
-Pizza App
+# Pizza App
 
-Table of Contents
-	•	Introduction
-	•	Features
-	•	Tech Stack
-	•	Installation & Setup
-	•	1. Clone the Repository
-	•	2. Install Dependencies
-	•	3. Configure API Keys
-	•	4. Running the Application
-	•	Deployment
-	•	License
+## Table of Contents
+- [Introduction](#introduction)
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Installation & Setup](#installation--setup)
+  - [1. Clone the Repository](#1-clone-the-repository)
+  - [2. Install Dependencies](#2-install-dependencies)
+  - [3. Configure API Keys](#3-configure-api-keys)
+  - [4. Running the Application](#4-running-the-application)
+- [Deployment](#deployment)
+- [License](#license)
 
-Introduction
+---
 
-Pizza App is a mobile UI prototype developed using Xamarin.Forms. It provides a seamless ordering experience, allowing users to browse available pizzas, customize their selection, add items to the cart, proceed to checkout, and manage their order history. The app follows modern UI/UX principles, offering a clean and intuitive interface.
+## Introduction
+Pizza App is a mobile application built using **Xamarin.Forms** that allows users to browse different types of pizzas, customize their orders, add items to the cart, place orders, and track their order history. The application provides a modern and intuitive user interface, ensuring a seamless user experience.
 
-Features
-	•	Menu Browsing: View available pizzas with images, descriptions, and pricing.
-	•	Customization: Choose size, crust, and additional toppings.
-	•	Cart Management: Add, remove, and update item quantities.
-	•	Checkout: Secure order placement with address selection and payment options.
-	•	Order History: Track past orders and reorder with a single tap.
-	•	Profile Management: Update user information and preferences.
-	•	Dark Mode Support: Adapts to system theme settings.
+---
 
-Tech Stack
+## Features
+- **Browse Menu:** View available pizzas with images, descriptions, and prices.
+- **Customization:** Choose pizza size, crust type, and additional toppings.
+- **Cart Management:** Add, remove, and update items in the cart.
+- **Checkout Process:** Enter delivery details, select a payment method, and place an order.
+- **Order History:** View past orders and reorder quickly.
+- **Profile Management:** Update user details and preferences.
+- **Dark Mode Support:** Adjusts based on system theme settings.
 
-Frontend:
-	•	Xamarin.Forms (XAML for UI)
-	•	C# (Business Logic)
-	•	Shell Navigation
+---
 
-Backend:
-	•	Mock Data Store (Expandable to Firebase/REST API)
-	•	Google Maps API (For address selection)
+## Tech Stack
+### **Frontend:**
+- **Xamarin.Forms (XAML for UI)**
+- **C# (Business Logic)**
+- **Shell Navigation**
 
-Deployment & Dev Tools:
-	•	Visual Studio
-	•	Android Emulator / iOS Simulator
-	•	NuGet Package Manager
+### **Backend:**
+- **Mock Data Store (Expandable to Firebase or a REST API)**
+- **Google Maps API (For address selection)**
 
-Installation & Setup
+### **Deployment & Dev Tools:**
+- **Visual Studio (For Development)**
+- **Android Emulator / iOS Simulator (For Testing)**
+- **NuGet Package Manager (For Dependencies)**
 
-1. Clone the Repository
+---
 
+## Installation & Setup
+
+### **1. Clone the Repository**
+```sh
 git clone https://github.com/your-username/pizza-app.git
 cd pizza-app
+```
 
-2. Install Dependencies
+### **2. Install Dependencies**
+```sh
+# Open the solution file in Visual Studio and restore NuGet packages.
+```
 
-# Restore NuGet packages in Visual Studio
-
-3. Configure API Keys
-
-For Android, add your Google Maps API Key in AndroidManifest.xml:
-
+### **3. Configure API Keys**
+For Android, add your Google Maps API Key in `AndroidManifest.xml`:
+```xml
 <meta-data android:name="com.google.android.geo.API_KEY" android:value="YOUR_GOOGLE_MAPS_API_KEY" />
+```
 
-4. Running the Application
-	•	Open Pizza_App.sln in Visual Studio.
-	•	Select Android Emulator or iOS Simulator.
-	•	Click Run (F5).
+### **4. Running the Application**
+- Open `Pizza_App.sln` in Visual Studio.
+- Select Android Emulator or iOS Simulator.
+- Click **Run (F5)**.
 
-Deployment
+---
 
+## Deployment
 Pizza App can be deployed to both Android and iOS platforms. The deployment process involves:
-	1.	Building the Application: Use Visual Studio to generate APK/IPA files.
-	2.	Testing on Devices: Ensure UI responsiveness across different screen sizes.
-	3.	Publishing: Deploy to Google Play Store and Apple App Store (if required).
+1. **Building the Application:** Generate APK for Android and IPA for iOS using Visual Studio.
+2. **Testing on Physical Devices:** Ensure smooth functionality across different screen sizes.
+3. **Publishing to Stores:** Upload to Google Play Store and Apple App Store if required.
 
-License
+---
 
-This project is licensed under the MIT License.
+## License
+This project is licensed under the **MIT License**.
