@@ -41,7 +41,7 @@
 
         <ShellContent 
             Title="Orders" 
-            Icon="history.png" 
+            Icon="orders.png" 
             Route="orders"
             ContentTemplate="{DataTemplate local:OrderHistory}" />
 

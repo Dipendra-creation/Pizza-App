@@ -6,10 +6,7 @@
     Title="Pizza Time"
     BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColor}, Dark={StaticResource BackgroundColorDark}}">
 
-    <!-- 
-      ResourceDictionary for styling the "cards" 
-      Replaces the PancakeView usage with Frame
-    -->
+    <!-- ResourceDictionary for styling the "cards" -->
     <ContentPage.Resources>
         <ResourceDictionary>
             <!-- Style for pizza "cards" -->
@@ -41,7 +38,7 @@
             <Frame Grid.Column="0"
                    Padding="5"
                    CornerRadius="25"
-                   HasShadow="False" 
+                   HasShadow="False"
                    BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor},
                                                     Dark={StaticResource SurfaceColorDark}}">
                 <Grid ColumnDefinitions="Auto,*">
@@ -147,10 +144,7 @@
                            VerticalOptions="Center" />
                 </Grid>
 
-                <!-- 
-                  IMPORTANT: Give this CollectionView a Name so we can 
-                  find it in Home.xaml.cs for animations 
-                -->
+                <!-- CollectionView for Popular Pizzas -->
                 <CollectionView x:Name="PizzaCollectionView"
                                 ItemsLayout="HorizontalList"
                                 Margin="0,10"
@@ -166,7 +160,6 @@
                     </CollectionView.ItemsSource>
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <!-- Use our PizzaCardStyle -->
                             <Frame Style="{StaticResource PizzaCardStyle}">
                                 <Frame.GestureRecognizers>
                                     <!-- 
@@ -178,8 +171,12 @@
                                 </Frame.GestureRecognizers>
 
                                 <Grid RowDefinitions="*,Auto,Auto,Auto" Padding="10">
+                                    <!-- 
+                                      Replace "pizza_placeholder.jpg" with actual .jpg 
+                                      if you have e.g. pizza_pepperoni.jpg for each item 
+                                    -->
                                     <Image Grid.Row="0"
-                                           Source="pizza_placeholder.png"
+                                           Source="pizza_placeholder.jpg"
                                            Aspect="AspectFill" />
                                     <Label Grid.Row="1"
                                            Text="{Binding .}"
@@ -248,16 +245,20 @@
                     </CollectionView.ItemsSource>
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <!-- Another Frame for recommended pizzas -->
                             <Frame CornerRadius="15"
                                    Margin="5,10"
                                    HasShadow="True"
                                    BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColor},
                                                                   Dark={StaticResource SurfaceColorDark}}">
+
                                 <Grid ColumnDefinitions="Auto,*,Auto"
                                       Padding="10">
+                                    <!-- 
+                                      Replace "pizza_placeholder.jpg" with actual .jpg 
+                                      if you have e.g. pizza_veggiedelight.jpg 
+                                    -->
                                     <Image Grid.Column="0"
-                                           Source="pizza_placeholder.png"
+                                           Source="pizza_placeholder.jpg"
                                            HeightRequest="80"
                                            WidthRequest="80"
                                            Aspect="AspectFill"
@@ -314,15 +315,21 @@
             <Frame.Background>
                 <!-- LinearGradientBrush requires Xamarin.Forms 4.8+ -->
                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                    <GradientStop Color="{AppThemeBinding Light={StaticResource PrimaryColor}, 
-                                                       Dark={StaticResource PrimaryColorDark}}" Offset="0.0" />
-                    <GradientStop Color="{AppThemeBinding Light={StaticResource PrimaryDarkColor}, 
-                                                       Dark={StaticResource PrimaryDarkColorDark}}" Offset="1.0" />
+                    <GradientStop 
+                        Color="{AppThemeBinding Light={StaticResource PrimaryColor}, 
+                                           Dark={StaticResource PrimaryColorDark}}" 
+                        Offset="0.0" />
+                    <GradientStop 
+                        Color="{AppThemeBinding Light={StaticResource PrimaryDarkColor}, 
+                                           Dark={StaticResource PrimaryDarkColorDark}}" 
+                        Offset="1.0" />
                 </LinearGradientBrush>
             </Frame.Background>
             <Grid>
                 <!-- Cart Icon -->
-                <Image Source="cart_white.png" HeightRequest="24" WidthRequest="24" />
+                <Image Source="cart_white.png" 
+                       HeightRequest="24" 
+                       WidthRequest="24" />
                 <!-- Badge (example: 3 items) -->
                 <Frame BackgroundColor="White"
                        CornerRadius="10"

@@ -145,4 +145,10 @@
       <Name>Pizza App</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\profile.png" />
+    <Content Include="Resources\cart.png" />
+    <Content Include="Resources\home.png" />
+    <Content Include="Resources\orders.png" />
+  </ItemGroup>
 </Project>

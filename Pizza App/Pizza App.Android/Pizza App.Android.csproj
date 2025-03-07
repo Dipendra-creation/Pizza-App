@@ -100,5 +100,28 @@
       <Name>Pizza App</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\profile.png" />
+    <AndroidResource Include="Resources\drawable\cart.png" />
+    <AndroidResource Include="Resources\drawable\home.png" />
+    <AndroidResource Include="Resources\drawable\orders.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\pizza_bbqchicken.jpg" />
+    <AndroidResource Include="Resources\drawable\pizza_buffalochicken.jpg" />
+    <AndroidResource Include="Resources\drawable\pizza_hawaiian.jpg" />
+    <AndroidResource Include="Resources\drawable\pizza_margherita.jpg" />
+    <AndroidResource Include="Resources\drawable\pizza_pepperoni.jpg" />
+    <AndroidResource Include="Resources\drawable\pizza_supreme.jpg" />
+    <AndroidResource Include="Resources\drawable\pizza_veggiedelight.jpg" />
+    <AndroidResource Include="Resources\drawable\topping_bacon.jpg" />
+    <AndroidResource Include="Resources\drawable\topping_bellpepper.jpg" />
+    <AndroidResource Include="Resources\drawable\topping_mushroom.jpg" />
+    <AndroidResource Include="Resources\drawable\topping_olive.jpg" />
+    <AndroidResource Include="Resources\drawable\topping_onion.jpg" />
+    <AndroidResource Include="Resources\drawable\topping_pepperoni.jpg" />
+    <AndroidResource Include="Resources\drawable\topping_pineapple.jpg" />
+    <AndroidResource Include="Resources\drawable\topping_sausage.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>
