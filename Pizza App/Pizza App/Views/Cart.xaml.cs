@@ -50,23 +50,20 @@ namespace Pizza_App.Views
         private async void OnCheckoutClicked(object sender, EventArgs e)
         {
             // Navigate to the checkout page
-            // Use "///checkout" if you need an absolute route
-            await Shell.Current.GoToAsync("checkout");
+            // Use "///checkout" if you need an absolute route from anywhere
+            await Shell.Current.GoToAsync("///checkout");
+
         }
 
         private void OnIncreaseQuantity(object sender, EventArgs e)
         {
-            // Increase the quantity of the selected item
             if (sender is Button button && button.Parent is StackLayout stackLayout)
             {
-                // Find the Label in this stack that shows quantity
                 var quantityLabel = stackLayout.Children.FirstOrDefault(c => c is Label) as Label;
                 if (quantityLabel != null && int.TryParse(quantityLabel.Text, out int quantity))
                 {
                     quantity++;
                     quantityLabel.Text = quantity.ToString();
-
-                    // Update the total price
                     UpdateTotalPrice();
                 }
             }
@@ -74,7 +71,6 @@ namespace Pizza_App.Views
 
         private void OnDecreaseQuantity(object sender, EventArgs e)
         {
-            // Decrease the quantity of the selected item
             if (sender is Button button && button.Parent is StackLayout stackLayout)
             {
                 var quantityLabel = stackLayout.Children.FirstOrDefault(c => c is Label) as Label;
@@ -84,8 +80,6 @@ namespace Pizza_App.Views
                     {
                         quantity--;
                         quantityLabel.Text = quantity.ToString();
-
-                        // Update the total price
                         UpdateTotalPrice();
                     }
                     else
@@ -99,7 +93,6 @@ namespace Pizza_App.Views
 
         private void RemoveCartItem(Button button)
         {
-            // Find the parent Frame and remove it from "CartItemsLayout"
             View parent = button;
             while (parent != null && !(parent is Frame))
             {
@@ -109,8 +102,6 @@ namespace Pizza_App.Views
             if (parent != null && parent.Parent is StackLayout cartItemsLayout)
             {
                 cartItemsLayout.Children.Remove(parent);
-
-                // Update total price and cart count
                 UpdateTotalPrice();
                 UpdateCartCount();
             }
@@ -118,57 +109,49 @@ namespace Pizza_App.Views
 
         private void UpdateTotalPrice()
         {
-            // Calculate new total price (simplified)
+            // Simplified price calculation
             decimal subtotal = 0;
-
             var stackLayout = this.FindByName<StackLayout>("CartItemsLayout");
             if (stackLayout != null)
             {
                 foreach (var item in stackLayout.Children)
                 {
-                    if (item is Frame itemFrame)
+                    if (item is Frame itemFrame && itemFrame.Content is Grid grid)
                     {
-                        // Suppose itemFrame has a Grid inside with "PriceLabel" and "QuantityLabel"
-                        if (itemFrame.Content is Grid grid)
-                        {
-                            var priceLabel = grid.FindByName<Label>("PriceLabel");
-                            var quantityLabel = grid.FindByName<Label>("QuantityLabel");
+                        // If you named the price label "PriceLabel" and quantity label "QuantityLabel", you can do:
+                        // var priceLabel = grid.FindByName<Label>("PriceLabel");
+                        // var quantityLabel = grid.FindByName<Label>("QuantityLabel");
+                        // For now, we parse from the existing text.
 
-                            if (priceLabel != null && quantityLabel != null)
+                        var priceLbl = grid.Children.OfType<Label>().FirstOrDefault(l => l.Text.StartsWith("$"));
+                        var quantityLbl = grid.Children.OfType<StackLayout>()
+                            .SelectMany(sl => sl.Children.OfType<Label>())
+                            .FirstOrDefault(l => !string.IsNullOrWhiteSpace(l.Text) && char.IsDigit(l.Text[0]));
+
+                        if (priceLbl != null && quantityLbl != null)
+                        {
+                            string priceText = priceLbl.Text.Replace("$", "");
+                            if (decimal.TryParse(priceText, out decimal price) &&
+                                int.TryParse(quantityLbl.Text, out int quantity))
                             {
-                                string priceText = priceLabel.Text.Replace("$", "");
-                                if (decimal.TryParse(priceText, out decimal price) &&
-                                    int.TryParse(quantityLabel.Text, out int quantity))
-                                {
-                                    subtotal += price * quantity;
-                                }
+                                subtotal += price * quantity;
                             }
                         }
                     }
                 }
             }
 
-            // Update the subtotal, tax, and total labels if they exist
-            var subtotalLabel = this.FindByName<Label>("SubtotalLabel");
-            var taxLabel = this.FindByName<Label>("TaxLabel");
-            var totalLabel = this.FindByName<Label>("TotalLabel");
+            // If you have labels named SubtotalLabel, TaxLabel, TotalLabel, update them here:
+            // e.g.,
+            // var subtotalLabel = this.FindByName<Label>("SubtotalLabel");
+            // if (subtotalLabel != null) { ... }
 
-            if (subtotalLabel != null && taxLabel != null && totalLabel != null)
-            {
-                subtotalLabel.Text = $"${subtotal:F2}";
-
-                decimal tax = subtotal * 0.08m; // 8% tax rate
-                taxLabel.Text = $"${tax:F2}";
-
-                decimal deliveryFee = 2.99m;
-                decimal total = subtotal + tax + deliveryFee;
-                totalLabel.Text = $"${total:F2}";
-            }
+            // Just an example, no real label named here:
+            Console.WriteLine($"New subtotal: {subtotal}");
         }
 
         private void UpdateCartCount()
         {
-            // Update the cart count if you have a label named "CartCountLabel"
             var stackLayout = this.FindByName<StackLayout>("CartItemsLayout");
             if (stackLayout != null)
             {
