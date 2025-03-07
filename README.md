@@ -1,4 +1,4 @@
-# Pizza App - Xamarin.Forms Mobile UI Prototype
+# 🍕Pizza App - Xamarin.Forms Mobile UI Prototype
 
 ## Table of Contents
 - [Introduction](#introduction)
