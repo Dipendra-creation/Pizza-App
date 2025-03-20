@@ -7,16 +7,18 @@
 <ContentPage 
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converters="clr-namespace:Pizza_App.Converters"
+
     x:Class="Pizza_App.Views.Home"
     Title="Pizza Time"
     BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColor}, Dark={StaticResource BackgroundColorDark}}">
 
-    <!-- 
-      ResourceDictionary for styling reusable components within the page,
-      such as the "pizza cards" used in the pizza listings.
-    -->
     <ContentPage.Resources>
         <ResourceDictionary>
+
+            <!-- Register the PizzaNameToImageConverter -->
+            <converters:PizzaNameToImageConverter x:Key="PizzaImageConverter" />
+
             <!-- 
               PizzaCardStyle: A style applied to Frame elements to create a consistent look for pizza cards.
               It defines background colors (with theme support), rounded corners, margin, fixed dimensions, and a drop shadow.
@@ -195,10 +197,10 @@
 
                                 <!-- Layout for pizza details -->
                                 <Grid RowDefinitions="*,Auto,Auto,Auto" Padding="10">
-                                    <!-- Pizza Image -->
+                                    <!-- Pizza Image uses the converter to map name -> correct .jpg -->
                                     <Image Grid.Row="0"
-                                           Source="pizza_placeholder.jpg"
-                                           Aspect="AspectFill" />
+                                           Aspect="AspectFill"
+                                           Source="{Binding ., Converter={StaticResource PizzaImageConverter}}" />
                                     <!-- Pizza Name -->
                                     <Label Grid.Row="1"
                                            Text="{Binding .}"
@@ -281,13 +283,13 @@
                                                                   Dark={StaticResource SurfaceColorDark}}">
                                 <Grid ColumnDefinitions="Auto,*,Auto"
                                       Padding="10">
-                                    <!-- Pizza Image -->
+                                    <!-- Pizza Image with the converter -->
                                     <Image Grid.Column="0"
-                                           Source="pizza_placeholder.jpg"
-                                           HeightRequest="80"
-                                           WidthRequest="80"
                                            Aspect="AspectFill"
-                                           VerticalOptions="Center" />
+                                           WidthRequest="80"
+                                           HeightRequest="80"
+                                           VerticalOptions="Center"
+                                           Source="{Binding ., Converter={StaticResource PizzaImageConverter}}" />
                                     <!-- Pizza Details -->
                                     <StackLayout Grid.Column="1"
                                                  VerticalOptions="Center"
@@ -345,10 +347,6 @@
                HeightRequest="60"
                WidthRequest="60"
                HasShadow="True">
-            <!-- 
-              The background uses a LinearGradientBrush to create a gradient effect.
-              This requires Xamarin.Forms version 4.8 or later.
-            -->
             <Frame.Background>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                     <GradientStop 
@@ -361,13 +359,10 @@
                         Offset="1.0" />
                 </LinearGradientBrush>
             </Frame.Background>
-            <!-- Layout for the cart icon and badge -->
             <Grid>
-                <!-- Cart Icon -->
                 <Image Source="cart_white.png" 
                        HeightRequest="24" 
                        WidthRequest="24" />
-                <!-- Badge displaying the number of items (example: 3) -->
                 <Frame BackgroundColor="White"
                        CornerRadius="10"
                        HeightRequest="20"

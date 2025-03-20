@@ -3,33 +3,33 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Pizza_App.App">
 
-    <!-- 
-      These are global resources and styles that apply throughout the app. 
-      Colors and styles are defined for both Light and Dark themes. 
-    -->
     <Application.Resources>
         <ResourceDictionary>
 
             <!-- Light Theme Colors -->
-            <Color x:Key="PrimaryColor">#E53935</Color>
-            <Color x:Key="PrimaryDarkColor">#B71C1C</Color>
-            <Color x:Key="AccentColor">#FF5252</Color>
-            <Color x:Key="BackgroundColor">#FFFFFF</Color>
-            <Color x:Key="SurfaceColor">#F5F5F5</Color>
-            <Color x:Key="TextPrimaryColor">#212121</Color>
-            <Color x:Key="TextSecondaryColor">#757575</Color>
-            <Color x:Key="BorderColor">#E0E0E0</Color>
+            <Color x:Key="PrimaryColor">#f7d012</Color>
+            <Color x:Key="PrimaryDarkColor">#806b04</Color>
+            <Color x:Key="AccentColor">#f9e366</Color>
+            <Color x:Key="BackgroundColor">#9b9a76</Color>
+            <Color x:Key="SurfaceColor">#a4d39f</Color>
+            <Color x:Key="TextPrimaryColor">#44443c</Color>
+            <!-- For simplicity, using the same value for secondary text -->
+            <Color x:Key="TextSecondaryColor">#44443c</Color>
+            <Color x:Key="BorderColor">#806b04</Color>
             <Color x:Key="CardShadowColor">#20000000</Color>
 
             <!-- Dark Theme Colors -->
-            <Color x:Key="PrimaryColorDark">#FF5252</Color>
-            <Color x:Key="PrimaryDarkColorDark">#B71C1C</Color>
-            <Color x:Key="AccentColorDark">#FF8A80</Color>
-            <Color x:Key="BackgroundColorDark">#121212</Color>
-            <Color x:Key="SurfaceColorDark">#1E1E1E</Color>
-            <Color x:Key="TextPrimaryColorDark">#FFFFFF</Color>
-            <Color x:Key="TextSecondaryColorDark">#B0B0B0</Color>
-            <Color x:Key="BorderColorDark">#333333</Color>
+            <Color x:Key="PrimaryColorDark">#f7d012</Color>
+            <Color x:Key="PrimaryDarkColorDark">#806b04</Color>
+            <Color x:Key="AccentColorDark">#f9e366</Color>
+            <!-- Using the dark text color as the dark theme background -->
+            <Color x:Key="BackgroundColorDark">#44443c</Color>
+            <!-- For dark theme surface elements, using the light background color -->
+            <Color x:Key="SurfaceColorDark">#9b9a76</Color>
+            <!-- In dark theme, using a bright accent for primary text -->
+            <Color x:Key="TextPrimaryColorDark">#f9e366</Color>
+            <Color x:Key="TextSecondaryColorDark">#f7d012</Color>
+            <Color x:Key="BorderColorDark">#806b04</Color>
             <Color x:Key="CardShadowColorDark">#40000000</Color>
 
             <!-- Label Styles for Headers and Body Text -->
@@ -96,7 +96,7 @@
 
             <Style TargetType="Frame">
                 <Setter Property="BackgroundColor"
-                        Value="{AppThemeBinding Light={StaticResource BackgroundColor}, Dark={StaticResource SurfaceColorDark}}" />
+                        Value="{AppThemeBinding Light={StaticResource BackgroundColor}, Dark={StaticResource BackgroundColorDark}}" />
                 <Setter Property="BorderColor"
                         Value="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource BorderColorDark}}" />
                 <Setter Property="CornerRadius" Value="10" />
@@ -113,14 +113,13 @@
                         <VisualStateGroup x:Name="CommonStates">
                             <VisualState x:Name="Normal">
                                 <VisualState.Setters>
-                                    <!-- Uses 'PrimaryColor' resource -->
                                     <Setter Property="BackgroundColor" Value="{StaticResource PrimaryColor}" />
                                 </VisualState.Setters>
                             </VisualState>
                             <VisualState x:Name="Disabled">
                                 <VisualState.Setters>
-                                    <!-- 20% alpha of #E53935 -->
-                                    <Setter Property="BackgroundColor" Value="#33E53935" />
+                                    <!-- 20% alpha of PrimaryColor -->
+                                    <Setter Property="BackgroundColor" Value="#33f7d012" />
                                 </VisualState.Setters>
                             </VisualState>
                         </VisualStateGroup>
