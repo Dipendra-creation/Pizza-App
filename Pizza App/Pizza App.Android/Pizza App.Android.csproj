@@ -115,6 +115,8 @@
     <AndroidResource Include="Resources\drawable\pizza_pepperoni.jpg" />
     <AndroidResource Include="Resources\drawable\pizza_supreme.jpg" />
     <AndroidResource Include="Resources\drawable\pizza_veggiedelight.jpg" />
+  </ItemGroup>
+  <ItemGroup>
     <AndroidResource Include="Resources\drawable\topping_bacon.jpg" />
     <AndroidResource Include="Resources\drawable\topping_bellpepper.jpg" />
     <AndroidResource Include="Resources\drawable\topping_mushroom.jpg" />
