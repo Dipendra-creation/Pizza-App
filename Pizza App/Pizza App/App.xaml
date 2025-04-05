@@ -84,9 +84,9 @@
                     </VisualStateGroupList>
                 </Setter>
             </Style>
-
+            
             <Style TargetType="Button" x:Key="SecondaryButton">
-                <Setter Property="BackgroundColor" Value="Transparent" />
+                <Setter Property="BackgroundColor" Value="White" />
                 <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource PrimaryColor}, Dark={StaticResource PrimaryColorDark}}" />
                 <Setter Property="FontFamily" Value="Montserrat-SemiBold" />
                 <Setter Property="FontSize" Value="16" />
@@ -95,7 +95,14 @@
                 <Setter Property="CornerRadius" Value="25" />
                 <Setter Property="Padding" Value="20,10" />
                 <Setter Property="Margin" Value="20,10" />
+                <Style.Triggers>
+                    <Trigger TargetType="Button" Property="IsPressed" Value="True">
+                        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource PrimaryColor}, Dark={StaticResource PrimaryColorDark}}" />
+                        <Setter Property="TextColor" Value="White" />
+                    </Trigger>
+                </Style.Triggers>
             </Style>
+
 
             <!-- Entry Style -->
             <Style TargetType="Entry">

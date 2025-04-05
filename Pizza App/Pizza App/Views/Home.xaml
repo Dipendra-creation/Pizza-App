@@ -52,7 +52,7 @@
 
                 <Button Grid.Column="1"
                         Text="FILTER"
-                        Style="{StaticResource SecondaryButton}"
+                        Style="{StaticResource PrimaryButton}"
                         HeightRequest="48"
                         WidthRequest="90"
                         VerticalOptions="Center"
@@ -193,7 +193,7 @@
                 </Grid>
 
                 <!-- Recommended List -->
-                <CollectionView Margin="10">
+                <CollectionView Margin="10" SelectionMode="None">
                     <CollectionView.ItemsSource>
                         <x:Array Type="{x:Type x:String}">
                             <x:String>Veggie Delight</x:String>
@@ -204,81 +204,90 @@
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <Frame CornerRadius="15"
-                                   Margin="5,10"
-                                   HasShadow="True"
-                                   BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColor}, Dark={StaticResource SurfaceColorDark}}">
-                                <Grid ColumnDefinitions="Auto,*,Auto" Padding="10">
+                   Margin="5"
+                   HasShadow="True"
+                   Padding="0"
+                   BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColor}, Dark={StaticResource SurfaceColorDark}}">
+                                <Grid Padding="10" ColumnSpacing="10" RowSpacing="5">
+                                    <Grid.ColumnDefinitions>
+                                        <!-- Fixed width for the image container -->
+                                        <ColumnDefinition Width="80" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <!-- Pizza Image -->
                                     <Image Grid.Column="0"
-                                           Aspect="AspectFill"
-                                           WidthRequest="80"
-                                           HeightRequest="80"
-                                           VerticalOptions="Center"
-                                           Source="{Binding ., Converter={StaticResource PizzaImageConverter}}" />
-                                    <StackLayout Grid.Column="1" VerticalOptions="Center" Margin="15,0">
+                           Source="{Binding ., Converter={StaticResource PizzaImageConverter}}"
+                           Aspect="AspectFill"
+                           VerticalOptions="Center" />
+                                    <!-- Pizza Info -->
+                                    <StackLayout Grid.Column="1" VerticalOptions="Center">
                                         <Label Text="{Binding .}"
-                                               FontFamily="Montserrat-Bold"
-                                               FontSize="16"
-                                               TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, Dark={StaticResource TextPrimaryColorDark}}" />
+                               FontFamily="Montserrat-Bold"
+                               FontSize="16"
+                               TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, Dark={StaticResource TextPrimaryColorDark}}" />
                                         <Label Text="Fresh and delicious"
-                                               FontFamily="Montserrat-Regular"
-                                               FontSize="12"
-                                               TextColor="{AppThemeBinding Light={StaticResource TextSecondaryColor}, Dark={StaticResource TextSecondaryColorDark}}" />
+                               FontFamily="Montserrat-Regular"
+                               FontSize="12"
+                               TextColor="{AppThemeBinding Light={StaticResource TextSecondaryColor}, Dark={StaticResource TextSecondaryColorDark}}" />
                                         <Label Text="$14.99"
-                                               FontFamily="Montserrat-Bold"
-                                               FontSize="16"
-                                               Margin="0,5,0,0"
-                                               TextColor="{AppThemeBinding Light={StaticResource PrimaryColor}, Dark={StaticResource PrimaryColorDark}}" />
+                               FontFamily="Montserrat-Bold"
+                               FontSize="16"
+                               Margin="0,5,0,0"
+                               TextColor="{AppThemeBinding Light={StaticResource PrimaryColor}, Dark={StaticResource PrimaryColorDark}}" />
                                     </StackLayout>
+                                    <!-- Action Button -->
                                     <Button Grid.Column="2"
-                                            Text="+"
-                                            FontSize="18"
-                                            FontAttributes="Bold"
-                                            BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryColor}, Dark={StaticResource PrimaryColorDark}}"
-                                            TextColor="White"
-                                            CornerRadius="15"
-                                            WidthRequest="30"
-                                            HeightRequest="30"
-                                            Padding="0"
-                                            VerticalOptions="Center" />
+                            Text="+"
+                            FontSize="18"
+                            FontAttributes="Bold"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryColor}, Dark={StaticResource PrimaryColorDark}}"
+                            TextColor="White"
+                            CornerRadius="15"
+                            WidthRequest="30"
+                            HeightRequest="30"
+                            Padding="0"
+                            VerticalOptions="Center" />
                                 </Grid>
                             </Frame>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
+
+
             </StackLayout>
         </ScrollView>
 
         <!-- 🛒 Floating Cart Button -->
         <Frame Grid.Row="2"
-               HorizontalOptions="End"
-               VerticalOptions="End"
-               CornerRadius="30"
-               Margin="0,0,20,20"
-               HeightRequest="60"
-               WidthRequest="60"
-               HasShadow="True">
+       HorizontalOptions="End"
+       VerticalOptions="End"
+       CornerRadius="30"
+       Margin="0,0,20,20"
+       HeightRequest="60"
+       WidthRequest="60"
+       HasShadow="True">
             <Frame.Background>
-                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <LinearGradientBrush StartPoint="0,0" EndPoint="2,2">
                     <GradientStop Color="{AppThemeBinding Light={StaticResource PrimaryColor}, Dark={StaticResource PrimaryColorDark}}" Offset="0.0" />
                     <GradientStop Color="{AppThemeBinding Light={StaticResource PrimaryDarkColor}, Dark={StaticResource PrimaryDarkColorDark}}" Offset="1.0" />
                 </LinearGradientBrush>
             </Frame.Background>
             <Grid>
-                <Image Source="cart_white.png" HeightRequest="24" WidthRequest="24" />
-                <Frame BackgroundColor="White"
-                       CornerRadius="10"
-                       HeightRequest="20"
-                       WidthRequest="20"
-                       HasShadow="False"
-                       HorizontalOptions="End"
-                       VerticalOptions="Start"
-                       Margin="0,-5,-5,0">
+                <Image Source="cart.png" HeightRequest="15" WidthRequest="15" />
+                <Frame BackgroundColor="Transparent"           
+           CornerRadius="50"
+           HeightRequest="30"
+           WidthRequest="30"
+           HorizontalOptions="End"
+           VerticalOptions="Start"
+           Margin="0,-30,-30,0">
                     <Label Text="3"
-                           TextColor="{StaticResource PrimaryColor}"
-                           FontSize="12"
-                           FontAttributes="Bold"
-                           HorizontalOptions="Center"
-                           VerticalOptions="Center" />
+             TextColor="White"
+             FontSize="20"
+             FontAttributes="Bold"
+             HorizontalOptions="Center"
+             VerticalOptions="Center" />
                 </Frame>
             </Grid>
         </Frame>
