@@ -16,10 +16,6 @@ namespace Pizza_App.Views
             InitializeComponent();
         }
 
-        // Define UsernameEntry and PasswordEntry as Entry controls.
-        public Entry UsernameEntry { get; private set; }
-        public Entry PasswordEntry { get; private set; }
-
         // Handles the Login button click event.
         private async void OnLoginClicked(object sender, EventArgs e)
         {

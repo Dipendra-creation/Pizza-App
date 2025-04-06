@@ -14,8 +14,6 @@ namespace Pizza_App
         {
             InitializeComponent();
 
-            // Register a mock data store for demonstration purposes.
-            DependencyService.Register<MockDataStore>();
 
             // Set the main page to AppShell, which handles our app's navigation.
             MainPage = new AppShell();

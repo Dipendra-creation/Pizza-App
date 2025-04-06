@@ -13,14 +13,6 @@ namespace Pizza_App.Views
         // Instance of the authentication service for signup operations.
         private readonly AuthenticationService authService = new AuthenticationService();
 
-        public Entry FullNameEntry { get; private set; }
-        public Entry UsernameEntry { get; private set; }
-        public Entry EmailEntry { get; private set; }
-        public Entry PhoneEntry { get; private set; }
-        public Entry AddressEntry { get; private set; }
-        public Entry PasswordEntry { get; private set; }
-        public Entry ConfirmPasswordEntry { get; private set; }
-
         public Signup()
         {
             InitializeComponent();
