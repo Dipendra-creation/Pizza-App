@@ -85,6 +85,16 @@
     <ShellContent 
         Route="checkout" 
         ContentTemplate="{DataTemplate local:Checkout}" />
+    
+    <!-- Login page -->
+    <ShellContent 
+        Route="login" 
+        ContentTemplate="{DataTemplate local:Login}" />
+
+    <!-- Signup page -->
+    <ShellContent 
+        Route="signup" 
+        ContentTemplate="{DataTemplate local:Signup}" />
 
 </Shell>
 

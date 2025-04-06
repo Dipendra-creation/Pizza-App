@@ -2,11 +2,12 @@
 using System.Windows.Input;
 using Xamarin.Forms;
 using Pizza_App.Services;
+using Xamarin.Essentials;
 
 namespace Pizza_App.ViewModels
 {
     // ViewModel for the Login page.
-    // Implements properties for user input and commands to execute login and navigate to the signup page.
+    // Exposes properties for user inputs and commands to perform login and navigate to the signup page.
     public class LoginViewModel : BaseViewModel
     {
         private string username;
@@ -37,18 +38,16 @@ namespace Pizza_App.ViewModels
             }
         }
 
-        // Commands bound to UI elements for login and signup navigation.
+        // Command to trigger the login process.
         public ICommand LoginCommand { get; }
+        // Command to navigate to the signup page.
         public ICommand NavigateToSignUpCommand { get; }
 
         private readonly AuthenticationService authService;
 
         public LoginViewModel()
         {
-            // Initialize the authentication service.
             authService = new AuthenticationService();
-
-            // Define the commands using async lambdas.
             LoginCommand = new Command(async () => await ExecuteLoginCommand());
             NavigateToSignUpCommand = new Command(async () => await ExecuteNavigateToSignUpCommand());
         }
@@ -56,19 +55,21 @@ namespace Pizza_App.ViewModels
         // Executes the login process.
         private async Task ExecuteLoginCommand()
         {
-            // Validate that both username and password are provided.
+            // Validate input fields.
             if (string.IsNullOrWhiteSpace(Username) || string.IsNullOrWhiteSpace(Password))
             {
                 await Application.Current.MainPage.DisplayAlert("Validation Error", "Please enter both username and password.", "OK");
                 return;
             }
 
-            // Attempt to authenticate the user.
+            // Attempt user authentication.
             var user = await authService.LoginAsync(Username, Password);
             if (user != null)
             {
+                // Set the login flag to true.
+                Preferences.Set("IsLoggedIn", true);
                 await Application.Current.MainPage.DisplayAlert("Success", "Login successful.", "OK");
-                // Navigate to the Home page using an absolute route.
+                // Navigate to the Home page (or AppShell) using an absolute route.
                 await Shell.Current.GoToAsync("///home");
             }
             else

@@ -2,6 +2,7 @@
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Pizza_App.Services;
+using Xamarin.Essentials; // For Preferences
 
 namespace Pizza_App
 {
@@ -14,11 +15,23 @@ namespace Pizza_App
             // Initialize the SQLite database (create tables if they don't exist)
             InitializeDatabaseAsync();
 
-            // Set the main page to AppShell for navigation management
-            MainPage = new AppShell();
+            // Check the login status using Preferences.
+            bool isLoggedIn = Preferences.Get("IsLoggedIn", false);
+
+            // Set the MainPage conditionally based on the login flag.
+            if (!isLoggedIn)
+            {
+                // If the user is not logged in, display the Login page wrapped in a NavigationPage.
+                MainPage = new NavigationPage(new Views.Login());
+            }
+            else
+            {
+                // If the user is logged in, load the AppShell for full navigation.
+                MainPage = new AppShell();
+            }
         }
 
-        // Asynchronously initializes the SQLite database
+        // Asynchronously initializes the SQLite database.
         private async void InitializeDatabaseAsync()
         {
             await SQLiteService.InitializeAsync();
@@ -26,17 +39,17 @@ namespace Pizza_App
 
         protected override void OnStart()
         {
-            // Handle any startup tasks here
+            // Handle when your app starts.
         }
 
         protected override void OnSleep()
         {
-            // Handle when your app goes to sleep (e.g., save state)
+            // Handle when your app goes to sleep.
         }
 
         protected override void OnResume()
         {
-            // Handle when your app resumes (e.g., restore state)
+            // Handle when your app resumes.
         }
     }
 }
