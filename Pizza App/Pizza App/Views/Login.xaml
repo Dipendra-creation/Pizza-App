@@ -6,38 +6,43 @@
     Title="Login"
     BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColor}, Dark={StaticResource BackgroundColorDark}}">
 
-    <!-- Main layout for the login screen -->
+    <!-- Main layout for the login screen using a StackLayout -->
     <StackLayout Padding="20" Spacing="15" VerticalOptions="CenterAndExpand">
-        <!-- Welcome message -->
+
+        <!-- Welcome message displayed at the top -->
         <Label Text="Welcome Back" 
                FontSize="24" 
                FontAttributes="Bold" 
                HorizontalOptions="Center" />
 
-        <!-- Username entry field -->
-        <Entry x:Name="UsernameEntry" 
-               Placeholder="Username" 
-               PlaceholderColor="{AppThemeBinding Light={StaticResource TextSecondaryColor}, Dark={StaticResource TextSecondaryColorDark}}"
-               TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, Dark={StaticResource TextPrimaryColorDark}}" />
+        <!-- Username entry field bound to the Username property in the ViewModel -->
+        <Entry Placeholder="Username" 
+               PlaceholderColor="{AppThemeBinding Light={StaticResource TextSecondaryColor}, 
+                                                  Dark={StaticResource TextSecondaryColorDark}}"
+               TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, 
+                                               Dark={StaticResource TextPrimaryColorDark}}"
+               Text="{Binding Username}" />
 
-        <!-- Password entry field -->
-        <Entry x:Name="PasswordEntry" 
-               Placeholder="Password" 
+        <!-- Password entry field bound to the Password property in the ViewModel -->
+        <Entry Placeholder="Password" 
                IsPassword="True"
-               PlaceholderColor="{AppThemeBinding Light={StaticResource TextSecondaryColor}, Dark={StaticResource TextSecondaryColorDark}}"
-               TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, Dark={StaticResource TextPrimaryColorDark}}" />
+               PlaceholderColor="{AppThemeBinding Light={StaticResource TextSecondaryColor}, 
+                                                  Dark={StaticResource TextSecondaryColorDark}}"
+               TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, 
+                                               Dark={StaticResource TextPrimaryColorDark}}"
+               Text="{Binding Password}" />
 
-        <!-- Login button -->
+        <!-- Login button bound to the LoginCommand defined in the ViewModel -->
         <Button Text="Login" 
                 Style="{StaticResource PrimaryButton}"
-                Clicked="OnLoginClicked" />
+                Command="{Binding LoginCommand}" />
 
-        <!-- Navigation to Signup page -->
+        <!-- Tappable label for navigation to the Signup page -->
         <Label Text="Don't have an account? Sign Up" 
                TextColor="Blue" 
                HorizontalOptions="Center">
             <Label.GestureRecognizers>
-                <TapGestureRecognizer Tapped="OnSignUpTapped" />
+                <TapGestureRecognizer Command="{Binding NavigateToSignUpCommand}" />
             </Label.GestureRecognizers>
         </Label>
     </StackLayout>

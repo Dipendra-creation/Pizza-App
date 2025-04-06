@@ -8,7 +8,6 @@
 
     <!-- Main layout for the Signup screen -->
     <StackLayout Padding="20" Spacing="15" VerticalOptions="CenterAndExpand">
-
         <!-- Header: Invitation to create an account -->
         <Label Text="Create Account" 
                FontSize="24" 
@@ -16,62 +15,76 @@
                HorizontalOptions="Center" />
 
         <!-- Full Name Entry -->
-        <Entry x:Name="FullNameEntry" 
-               Placeholder="Full Name" 
-               PlaceholderColor="{AppThemeBinding Light={StaticResource TextSecondaryColor}, Dark={StaticResource TextSecondaryColorDark}}"
-               TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, Dark={StaticResource TextPrimaryColorDark}}" />
+        <Entry Placeholder="Full Name" 
+               PlaceholderColor="{AppThemeBinding Light={StaticResource TextSecondaryColor}, 
+                                                  Dark={StaticResource TextSecondaryColorDark}}"
+               TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, 
+                                               Dark={StaticResource TextPrimaryColorDark}}"
+               Text="{Binding FullName}" />
 
         <!-- Username Entry -->
-        <Entry x:Name="UsernameEntry" 
-               Placeholder="Username" 
-               PlaceholderColor="{AppThemeBinding Light={StaticResource TextSecondaryColor}, Dark={StaticResource TextSecondaryColorDark}}"
-               TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, Dark={StaticResource TextPrimaryColorDark}}" />
+        <Entry Placeholder="Username" 
+               PlaceholderColor="{AppThemeBinding Light={StaticResource TextSecondaryColor}, 
+                                                  Dark={StaticResource TextSecondaryColorDark}}"
+               TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, 
+                                               Dark={StaticResource TextPrimaryColorDark}}"
+               Text="{Binding Username}" />
 
         <!-- Email Entry -->
-        <Entry x:Name="EmailEntry" 
-               Placeholder="Email" 
+        <Entry Placeholder="Email" 
                Keyboard="Email" 
-               PlaceholderColor="{AppThemeBinding Light={StaticResource TextSecondaryColor}, Dark={StaticResource TextSecondaryColorDark}}"
-               TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, Dark={StaticResource TextPrimaryColorDark}}" />
+               PlaceholderColor="{AppThemeBinding Light={StaticResource TextSecondaryColor}, 
+                                                  Dark={StaticResource TextSecondaryColorDark}}"
+               TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, 
+                                               Dark={StaticResource TextPrimaryColorDark}}"
+               Text="{Binding Email}" />
 
         <!-- Phone Number Entry -->
-        <Entry x:Name="PhoneEntry" 
-               Placeholder="Phone Number" 
+        <Entry Placeholder="Phone Number" 
                Keyboard="Telephone" 
-               PlaceholderColor="{AppThemeBinding Light={StaticResource TextSecondaryColor}, Dark={StaticResource TextSecondaryColorDark}}"
-               TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, Dark={StaticResource TextPrimaryColorDark}}" />
+               PlaceholderColor="{AppThemeBinding Light={StaticResource TextSecondaryColor}, 
+                                                  Dark={StaticResource TextSecondaryColorDark}}"
+               TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, 
+                                               Dark={StaticResource TextPrimaryColorDark}}"
+               Text="{Binding Phone}" />
 
         <!-- Address Entry -->
-        <Entry x:Name="AddressEntry" 
-               Placeholder="Delivery Address" 
-               PlaceholderColor="{AppThemeBinding Light={StaticResource TextSecondaryColor}, Dark={StaticResource TextSecondaryColorDark}}"
-               TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, Dark={StaticResource TextPrimaryColorDark}}" />
+        <Entry Placeholder="Delivery Address" 
+               PlaceholderColor="{AppThemeBinding Light={StaticResource TextSecondaryColor}, 
+                                                  Dark={StaticResource TextSecondaryColorDark}}"
+               TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, 
+                                               Dark={StaticResource TextPrimaryColorDark}}"
+               Text="{Binding Address}" />
 
         <!-- Password Entry -->
-        <Entry x:Name="PasswordEntry" 
-               Placeholder="Password" 
+        <Entry Placeholder="Password" 
                IsPassword="True" 
-               PlaceholderColor="{AppThemeBinding Light={StaticResource TextSecondaryColor}, Dark={StaticResource TextSecondaryColorDark}}"
-               TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, Dark={StaticResource TextPrimaryColorDark}}" />
+               PlaceholderColor="{AppThemeBinding Light={StaticResource TextSecondaryColor}, 
+                                                  Dark={StaticResource TextSecondaryColorDark}}"
+               TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, 
+                                               Dark={StaticResource TextPrimaryColorDark}}"
+               Text="{Binding Password}" />
 
         <!-- Confirm Password Entry -->
-        <Entry x:Name="ConfirmPasswordEntry" 
-               Placeholder="Confirm Password" 
+        <Entry Placeholder="Confirm Password" 
                IsPassword="True" 
-               PlaceholderColor="{AppThemeBinding Light={StaticResource TextSecondaryColor}, Dark={StaticResource TextSecondaryColorDark}}"
-               TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, Dark={StaticResource TextPrimaryColorDark}}" />
+               PlaceholderColor="{AppThemeBinding Light={StaticResource TextSecondaryColor}, 
+                                                  Dark={StaticResource TextSecondaryColorDark}}"
+               TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, 
+                                               Dark={StaticResource TextPrimaryColorDark}}"
+               Text="{Binding ConfirmPassword}" />
 
         <!-- Sign Up Button -->
         <Button Text="Sign Up" 
                 Style="{StaticResource PrimaryButton}"
-                Clicked="OnSignUpClicked" />
+                Command="{Binding SignupCommand}" />
 
-        <!-- Link to navigate to Login page -->
+        <!-- Navigation to Login Page -->
         <Label Text="Already have an account? Login" 
                TextColor="Blue" 
                HorizontalOptions="Center">
             <Label.GestureRecognizers>
-                <TapGestureRecognizer Tapped="OnLoginTapped" />
+                <TapGestureRecognizer Command="{Binding NavigateToLoginCommand}" />
             </Label.GestureRecognizers>
         </Label>
     </StackLayout>
