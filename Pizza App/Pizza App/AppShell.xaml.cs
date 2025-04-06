@@ -9,10 +9,11 @@ namespace Pizza_App
         public AppShell()
         {
             InitializeComponent();
-            // Register routes for navigation
-            Routing.RegisterRoute(nameof(PizzaCustomization), typeof(PizzaCustomization));
-            Routing.RegisterRoute(nameof(Checkout), typeof(Checkout));
-            Routing.RegisterRoute(nameof(Signup), typeof(Signup));
+
+            // Register routes with string keys to match GoToAsync
+            Routing.RegisterRoute("customization", typeof(PizzaCustomization));
+            Routing.RegisterRoute("checkout", typeof(Checkout));
+            Routing.RegisterRoute("signup", typeof(Signup));
         }
     }
 }

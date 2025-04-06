@@ -8,73 +8,73 @@ using Pizza_App.Services;
 namespace Pizza_App.ViewModels
 {
     // ViewModel for the Home page.
-    // Loads pizzas from the local database and handles adding a pizza to the cart.
     public class HomeViewModel : BaseViewModel
     {
-        private readonly PizzaService pizzaService;
-        private readonly CartService cartService;
+        private readonly PizzaService _pizzaService;
+        private readonly CartService _cartService;
 
-        // Collection of all pizzas.
         public ObservableCollection<Pizza> Pizzas { get; } = new ObservableCollection<Pizza>();
-        // Collection of recommended pizzas.
         public ObservableCollection<Pizza> RecommendedPizzas { get; } = new ObservableCollection<Pizza>();
 
-        // Command to add a selected pizza to the cart.
         public ICommand AddToCartCommand { get; }
 
         public HomeViewModel()
         {
-            pizzaService = new PizzaService();
-            cartService = new CartService();
+            _pizzaService = new PizzaService();
+            _cartService = new CartService();
+
             AddToCartCommand = new Command<Pizza>(async (pizza) => await ExecuteAddToCartCommand(pizza));
 
-            // Load pizzas from the local database.
             Task.Run(async () => await LoadPizzasAsync());
         }
 
-        // Loads pizzas from the local database.
         private async Task LoadPizzasAsync()
         {
-            var pizzas = await pizzaService.GetPizzasAsync();
-            Pizzas.Clear();
-            foreach (var pizza in pizzas)
+            try
             {
-                Pizzas.Add(pizza);
-            }
+                var pizzas = await _pizzaService.GetPizzasAsync();
 
-            // For demonstration, mark some pizzas as recommended (e.g., by filtering on name)
-            RecommendedPizzas.Clear();
-            foreach (var pizza in pizzas)
-            {
-                if (pizza.Name.Contains("Delight") || pizza.Name.Contains("Feast") || pizza.Name.Contains("Buffalo"))
+                Device.BeginInvokeOnMainThread(() =>
                 {
-                    RecommendedPizzas.Add(pizza);
-                }
+                    Pizzas.Clear();
+                    RecommendedPizzas.Clear();
+
+                    foreach (var pizza in pizzas)
+                    {
+                        Pizzas.Add(pizza);
+
+                        // Simple recommendation logic
+                        if (pizza.Name.Contains("Delight") || pizza.Name.Contains("Feast") || pizza.Name.Contains("Buffalo"))
+                        {
+                            RecommendedPizzas.Add(pizza);
+                        }
+                    }
+                });
+            }
+            catch
+            {
+                await Application.Current.MainPage.DisplayAlert("Error", "Failed to load pizzas.", "OK");
             }
         }
 
-        // Adds the selected pizza to the cart.
         private async Task ExecuteAddToCartCommand(Pizza pizza)
         {
             if (pizza == null)
                 return;
 
-            // Create a new CartItem using pizza details.
             var cartItem = new CartItem
             {
                 PizzaName = pizza.Name,
                 UnitPrice = pizza.Price,
                 Quantity = 1,
                 TotalPrice = pizza.Price,
-                Size = "Medium",  // Default value; may be customized later.
-                Crust = "Thin",   // Default value; may be customized later.
-                Toppings = ""     // Default; updated later in customization.
+                Size = "Medium",
+                Crust = "Thin",
+                Toppings = ""
             };
 
-            // Add the cart item to the database.
-            await cartService.AddCartItemAsync(cartItem);
+            await _cartService.AddCartItemAsync(cartItem);
 
-            // Provide user feedback.
             await Application.Current.MainPage.DisplayAlert("Success", $"{pizza.Name} added to cart.", "OK");
         }
     }

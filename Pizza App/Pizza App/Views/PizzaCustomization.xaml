@@ -1,26 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<!--
-  This ContentPage defines the PizzaCustomization view for the Pizza_App.
-  Users can customize their pizza by selecting size, crust, and toppings.
-  The page is divided into three main sections:
-  1. Top Section: Displays a gradient background with a pizza image and basic details.
-  2. Middle Section: A ScrollView containing controls for selecting pizza size, crust, and toppings.
-  3. Bottom Section: Displays the total price and an "Add to Cart" button.
--->
 <ContentPage 
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converters="clr-namespace:Pizza_App.Converters"
     x:Class="Pizza_App.Views.PizzaCustomization"
     Title="Customize Your Pizza"
     BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColor}, Dark={StaticResource BackgroundColorDark}}">
 
-    <!-- RESOURCE DICTIONARY -->
-    <!-- This ResourceDictionary defines reusable styles for topping icons and size/crust options.
-         It replaces PancakeView styling with Frame-based styles. -->
     <ContentPage.Resources>
         <ResourceDictionary>
+            <converters:SelectionToColorConverter x:Key="SelectionToColorConverter" />
 
-            <!-- Style for topping icons used in the toppings selection -->
+            <!-- Styles -->
             <Style x:Key="ToppingIconStyle" TargetType="Frame">
                 <Setter Property="CornerRadius" Value="15" />
                 <Setter Property="HeightRequest" Value="80" />
@@ -28,509 +19,129 @@
                 <Setter Property="Margin" Value="8" />
                 <Setter Property="Padding" Value="0" />
                 <Setter Property="HasShadow" Value="False" />
-                <Setter Property="BackgroundColor"
-                        Value="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource SurfaceColorDark}}" />
-                <Setter Property="BorderColor"
-                        Value="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource BorderColorDark}}" />
+                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource SurfaceColorDark}}" />
+                <Setter Property="BorderColor" Value="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource BorderColorDark}}" />
             </Style>
 
-            <!-- Style for size and crust option frames -->
             <Style x:Key="SizeOptionStyle" TargetType="Frame">
                 <Setter Property="CornerRadius" Value="10" />
                 <Setter Property="Padding" Value="15,10" />
                 <Setter Property="Margin" Value="5" />
                 <Setter Property="HasShadow" Value="False" />
-                <Setter Property="BackgroundColor"
-                        Value="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource SurfaceColorDark}}" />
+                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource SurfaceColorDark}}" />
             </Style>
-
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <!-- MAIN LAYOUT: Divided into three rows -->
     <Grid RowDefinitions="Auto,*,Auto">
-
-        <!-- TOP SECTION: Gradient background with pizza image and header text -->
-        <Frame Grid.Row="0"
-               HeightRequest="200"
-               CornerRadius="0"
-               HasShadow="False"
-               Padding="0">
-            <!-- LinearGradientBrush creates a gradient background for visual impact -->
+        <!-- TOP HEADER -->
+        <Frame Grid.Row="0" HeightRequest="200" CornerRadius="0" HasShadow="False" Padding="0">
             <Frame.Background>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                     <GradientStop Color="{AppThemeBinding Light={StaticResource PrimaryColor}, Dark={StaticResource PrimaryDarkColorDark}}" Offset="0.0" />
                     <GradientStop Color="{AppThemeBinding Light={StaticResource PrimaryDarkColor}, Dark={StaticResource PrimaryColorDark}}" Offset="1.0" />
                 </LinearGradientBrush>
             </Frame.Background>
-
-            <!-- Overlay Grid containing the pizza image and descriptive text -->
             <Grid>
-                <!-- Semi-transparent pizza image to serve as a background -->
-                <Image Source="pizza_large.png"
-                       Aspect="AspectFill"
-                       Opacity="0.6" />
-                <!-- Text overlay displaying the pizza name and a tagline -->
+                <Image Source="{Binding Pizza.ImageName}" Aspect="AspectFill" Opacity="0.6" />
                 <StackLayout VerticalOptions="End" Padding="20">
-                    <Label Text="Pepperoni Pizza"
-                           TextColor="White"
-                           FontFamily="Montserrat-Bold"
-                           FontSize="24" />
-                    <Label Text="Customize to your taste"
-                           TextColor="White"
-                           FontFamily="Montserrat-Regular"
-                           FontSize="16"
-                           Opacity="0.8" />
+                    <Label Text="{Binding Pizza.Name}" FontSize="24" FontFamily="Montserrat-Bold" TextColor="White" />
+                    <Label Text="{Binding Pizza.Description}" FontSize="16" FontFamily="Montserrat-Regular" TextColor="White" Opacity="0.8" />
                 </StackLayout>
             </Grid>
         </Frame>
 
-        <!-- MIDDLE SECTION: ScrollView containing customization options -->
+        <!-- CUSTOMIZATION SCROLL -->
         <ScrollView Grid.Row="1">
             <StackLayout Padding="20,10">
 
-                <!-- SIZE SELECTION -->
-                <Label Text="Select Size"
-                       Style="{StaticResource SubHeaderLabel}"
-                       Margin="0,10" />
-
-                <!-- Grid container for size options; named for code-behind access -->
-                <Grid x:Name="SizeContainer" ColumnDefinitions="*,*,*">
-
-                    <!-- SMALL SIZE OPTION -->
-                    <Frame Grid.Column="0"
-                           ClassId="small"
-                           Style="{StaticResource SizeOptionStyle}">
+                <!-- SIZE -->
+                <Label Text="Select Size" Style="{StaticResource SubHeaderLabel}" />
+                <Grid ColumnDefinitions="*,*,*">
+                    <Frame Style="{StaticResource SizeOptionStyle}"
+                           BackgroundColor="{Binding SelectedSize, Converter={StaticResource SelectionToColorConverter}, ConverterParameter=small}">
                         <Frame.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnSizeSelected" />
+                            <TapGestureRecognizer Command="{Binding SelectSizeCommand}" CommandParameter="small" />
                         </Frame.GestureRecognizers>
                         <StackLayout HorizontalOptions="Center">
-                            <Label Text="S"
-                                   TextColor="White"
-                                   FontFamily="Montserrat-Bold"
-                                   FontSize="18"
-                                   HorizontalOptions="Center" />
-                            <Label Text="10″"
-                                   TextColor="White"
-                                   FontFamily="Montserrat-Regular"
-                                   FontSize="14"
-                                   HorizontalOptions="Center" />
+                            <Label Text="S" FontSize="18" FontFamily="Montserrat-Bold" TextColor="White" HorizontalOptions="Center" />
+                            <Label Text="10″" FontSize="14" TextColor="White" HorizontalOptions="Center" />
                         </StackLayout>
                     </Frame>
 
-                    <!-- MEDIUM SIZE OPTION -->
-                    <Frame Grid.Column="1"
-                           ClassId="medium"
-                           Style="{StaticResource SizeOptionStyle}">
+                    <Frame Style="{StaticResource SizeOptionStyle}"
+                           BackgroundColor="{Binding SelectedSize, Converter={StaticResource SelectionToColorConverter}, ConverterParameter=medium}">
                         <Frame.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnSizeSelected" />
+                            <TapGestureRecognizer Command="{Binding SelectSizeCommand}" CommandParameter="medium" />
                         </Frame.GestureRecognizers>
                         <StackLayout HorizontalOptions="Center">
-                            <Label Text="M"
-                                   TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, Dark={StaticResource TextPrimaryColorDark}}"
-                                   FontFamily="Montserrat-Bold"
-                                   FontSize="18"
-                                   HorizontalOptions="Center" />
-                            <Label Text="12″"
-                                   TextColor="{AppThemeBinding Light={StaticResource TextSecondaryColor}, Dark={StaticResource TextSecondaryColorDark}}"
-                                   FontFamily="Montserrat-Regular"
-                                   FontSize="14"
-                                   HorizontalOptions="Center" />
+                            <Label Text="M" FontSize="18" FontFamily="Montserrat-Bold" HorizontalOptions="Center" />
+                            <Label Text="12″" FontSize="14" HorizontalOptions="Center" />
                         </StackLayout>
                     </Frame>
 
-                    <!-- LARGE SIZE OPTION -->
-                    <Frame Grid.Column="2"
-                           ClassId="large"
-                           Style="{StaticResource SizeOptionStyle}">
+                    <Frame Style="{StaticResource SizeOptionStyle}"
+                           BackgroundColor="{Binding SelectedSize, Converter={StaticResource SelectionToColorConverter}, ConverterParameter=large}">
                         <Frame.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnSizeSelected" />
+                            <TapGestureRecognizer Command="{Binding SelectSizeCommand}" CommandParameter="large" />
                         </Frame.GestureRecognizers>
                         <StackLayout HorizontalOptions="Center">
-                            <Label Text="L"
-                                   TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, Dark={StaticResource TextPrimaryColorDark}}"
-                                   FontFamily="Montserrat-Bold"
-                                   FontSize="18"
-                                   HorizontalOptions="Center" />
-                            <Label Text="14″"
-                                   TextColor="{AppThemeBinding Light={StaticResource TextSecondaryColor}, Dark={StaticResource TextSecondaryColorDark}}"
-                                   FontFamily="Montserrat-Regular"
-                                   FontSize="14"
-                                   HorizontalOptions="Center" />
+                            <Label Text="L" FontSize="18" FontFamily="Montserrat-Bold" HorizontalOptions="Center" />
+                            <Label Text="14″" FontSize="14" HorizontalOptions="Center" />
                         </StackLayout>
                     </Frame>
                 </Grid>
 
-                <!-- CRUST SELECTION -->
-                <Label Text="Select Crust"
-                       Style="{StaticResource SubHeaderLabel}"
-                       Margin="0,20,0,10" />
-
-                <!-- Grid container for crust options; named for code-behind access -->
-                <Grid x:Name="CrustContainer" ColumnDefinitions="*,*">
-
-                    <!-- THIN CRUST OPTION -->
-                    <Frame Grid.Column="0"
-                           ClassId="thin"
-                           Style="{StaticResource SizeOptionStyle}">
+                <!-- CRUST -->
+                <Label Text="Select Crust" Style="{StaticResource SubHeaderLabel}" Margin="0,20,0,10" />
+                <Grid ColumnDefinitions="*,*">
+                    <Frame Style="{StaticResource SizeOptionStyle}"
+                           BackgroundColor="{Binding SelectedCrust, Converter={StaticResource SelectionToColorConverter}, ConverterParameter=thin}">
                         <Frame.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnCrustSelected" />
+                            <TapGestureRecognizer Command="{Binding SelectCrustCommand}" CommandParameter="thin" />
                         </Frame.GestureRecognizers>
-                        <!-- Pre-colored background to indicate default selection -->
-                        <Frame.Background>
-                            <SolidColorBrush Color="{AppThemeBinding Light={StaticResource PrimaryColor}, Dark={StaticResource PrimaryColorDark}}" />
-                        </Frame.Background>
-                        <Label Text="Thin Crust"
-                               TextColor="White"
-                               FontFamily="Montserrat-SemiBold"
-                               HorizontalOptions="Center"
-                               VerticalOptions="Center" />
+                        <Label Text="Thin Crust" HorizontalOptions="Center" VerticalOptions="Center" />
                     </Frame>
 
-                    <!-- THICK CRUST OPTION -->
-                    <Frame Grid.Column="1"
-                           ClassId="thick"
-                           Style="{StaticResource SizeOptionStyle}">
+                    <Frame Style="{StaticResource SizeOptionStyle}"
+                           BackgroundColor="{Binding SelectedCrust, Converter={StaticResource SelectionToColorConverter}, ConverterParameter=thick}">
                         <Frame.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnCrustSelected" />
+                            <TapGestureRecognizer Command="{Binding SelectCrustCommand}" CommandParameter="thick" />
                         </Frame.GestureRecognizers>
-                        <Label Text="Thick Crust"
-                               TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, Dark={StaticResource TextPrimaryColorDark}}"
-                               FontFamily="Montserrat-SemiBold"
-                               HorizontalOptions="Center"
-                               VerticalOptions="Center" />
+                        <Label Text="Thick Crust" HorizontalOptions="Center" VerticalOptions="Center" />
                     </Frame>
                 </Grid>
 
-                <!-- TOPPINGS SELECTION -->
-                <Label Text="Select Toppings"
-       Style="{StaticResource SubHeaderLabel}"
-       Margin="0,20,0,10" />
-                <Label Text="Choose up to 5 toppings"
-       Style="{StaticResource BodyLabel}"
-       Margin="0,0,0,10" />
+                <!-- TOPPINGS -->
+                <Label Text="Select Toppings" Style="{StaticResource SubHeaderLabel}" Margin="0,20,0,5" />
+                <Label Text="Choose up to 5 toppings" Style="{StaticResource BodyLabel}" />
+                <Label Text="{Binding ToppingCounterText}" FontSize="14" FontFamily="Montserrat-SemiBold" Margin="0,0,0,10" />
 
-                <Label x:Name="ToppingCounterLabel"
-       Text="0/5 selected"
-       FontSize="14"
-       FontFamily="Montserrat-SemiBold"
-       TextColor="{AppThemeBinding Light={StaticResource TextSecondaryColor}, Dark={StaticResource TextSecondaryColorDark}}"
-       Margin="0,0,0,10" />
-                
-                
-                <!-- FlexLayout container for toppings; allows wrapping for multiple items -->
-                <FlexLayout x:Name="ToppingsContainer"
-            Wrap="Wrap"
-            JustifyContent="SpaceAround">
-
-                    <!-- Topping: Pepperoni -->
-                    <StackLayout FlexLayout.Basis="25%" HorizontalOptions="Center" Margin="4">
-                        <Frame ClassId="pepperoni" Style="{StaticResource ToppingIconStyle}">
-                            <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="OnToppingSelected" />
-                            </Frame.GestureRecognizers>
-                            <!-- VisualStateManager to toggle border when selected -->
-                            <VisualStateManager.VisualStateGroups>
-                                <VisualStateGroup x:Name="SelectionStates">
-                                    <VisualState x:Name="Normal">
-                                        <VisualState.Setters>
-                                            <Setter Property="BorderColor" Value="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource BorderColorDark}}" />
-                                        </VisualState.Setters>
-                                    </VisualState>
-                                    <VisualState x:Name="Selected">
-                                        <VisualState.Setters>
-                                            <Setter Property="BorderColor" Value="Blue" />
-                                        </VisualState.Setters>
-                                    </VisualState>
-                                </VisualStateGroup>
-                            </VisualStateManager.VisualStateGroups>
-                            <!-- Use a Grid to fill the entire Frame with an Image -->
-                            <Grid>
-                                <Image Source="topping_pepperoni.jpg"
-                       Aspect="AspectFill"
-                       HorizontalOptions="FillAndExpand"
-                       VerticalOptions="FillAndExpand" />
-                            </Grid>
-                        </Frame>
-                        <Label Text="Pepperoni"
-               FontSize="12"
-               FontFamily="Montserrat-SemiBold"
-               HorizontalOptions="Center"
-               TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, Dark={StaticResource TextPrimaryColorDark}}" />
-                    </StackLayout>
-
-                    <!-- Topping: Mushroom -->
-                    <StackLayout FlexLayout.Basis="25%" HorizontalOptions="Center" Margin="4">
-                        <Frame ClassId="mushroom" Style="{StaticResource ToppingIconStyle}">
-                            <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="OnToppingSelected" />
-                            </Frame.GestureRecognizers>
-                            <VisualStateManager.VisualStateGroups>
-                                <VisualStateGroup x:Name="SelectionStates">
-                                    <VisualState x:Name="Normal">
-                                        <VisualState.Setters>
-                                            <Setter Property="BorderColor" Value="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource BorderColorDark}}" />
-                                        </VisualState.Setters>
-                                    </VisualState>
-                                    <VisualState x:Name="Selected">
-                                        <VisualState.Setters>
-                                            <Setter Property="BorderColor" Value="Blue" />
-                                        </VisualState.Setters>
-                                    </VisualState>
-                                </VisualStateGroup>
-                            </VisualStateManager.VisualStateGroups>
-                            <Grid>
-                                <Image Source="topping_mushroom.jpg"
-                       Aspect="AspectFill"
-                       HorizontalOptions="FillAndExpand"
-                       VerticalOptions="FillAndExpand" />
-                            </Grid>
-                        </Frame>
-                        <Label Text="Mushroom"
-               FontSize="12"
-               FontFamily="Montserrat-SemiBold"
-               HorizontalOptions="Center"
-               TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, Dark={StaticResource TextPrimaryColorDark}}" />
-                    </StackLayout>
-
-                    <!-- Topping: Onion -->
-                    <StackLayout FlexLayout.Basis="25%" HorizontalOptions="Center" Margin="4">
-                        <Frame ClassId="onion" Style="{StaticResource ToppingIconStyle}">
-                            <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="OnToppingSelected" />
-                            </Frame.GestureRecognizers>
-                            <VisualStateManager.VisualStateGroups>
-                                <VisualStateGroup x:Name="SelectionStates">
-                                    <VisualState x:Name="Normal">
-                                        <VisualState.Setters>
-                                            <Setter Property="BorderColor" Value="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource BorderColorDark}}" />
-                                        </VisualState.Setters>
-                                    </VisualState>
-                                    <VisualState x:Name="Selected">
-                                        <VisualState.Setters>
-                                            <Setter Property="BorderColor" Value="Blue" />
-                                        </VisualState.Setters>
-                                    </VisualState>
-                                </VisualStateGroup>
-                            </VisualStateManager.VisualStateGroups>
-                            <Grid>
-                                <Image Source="topping_onion.jpg"
-                       Aspect="AspectFill"
-                       HorizontalOptions="FillAndExpand"
-                       VerticalOptions="FillAndExpand" />
-                            </Grid>
-                        </Frame>
-                        <Label Text="Onion"
-               FontSize="12"
-               FontFamily="Montserrat-SemiBold"
-               HorizontalOptions="Center"
-               TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, Dark={StaticResource TextPrimaryColorDark}}" />
-                    </StackLayout>
-
-                    <!-- Topping: Bell Pepper -->
-                    <StackLayout FlexLayout.Basis="25%" HorizontalOptions="Center" Margin="4">
-                        <Frame ClassId="bell_pepper" Style="{StaticResource ToppingIconStyle}">
-                            <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="OnToppingSelected" />
-                            </Frame.GestureRecognizers>
-                            <VisualStateManager.VisualStateGroups>
-                                <VisualStateGroup x:Name="SelectionStates">
-                                    <VisualState x:Name="Normal">
-                                        <VisualState.Setters>
-                                            <Setter Property="BorderColor" Value="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource BorderColorDark}}" />
-                                        </VisualState.Setters>
-                                    </VisualState>
-                                    <VisualState x:Name="Selected">
-                                        <VisualState.Setters>
-                                            <Setter Property="BorderColor" Value="Blue" />
-                                        </VisualState.Setters>
-                                    </VisualState>
-                                </VisualStateGroup>
-                            </VisualStateManager.VisualStateGroups>
-                            <Grid>
-                                <Image Source="topping_bellpepper.jpg"
-                       Aspect="AspectFill"
-                       HorizontalOptions="FillAndExpand"
-                       VerticalOptions="FillAndExpand" />
-                            </Grid>
-                        </Frame>
-                        <Label Text="Bell Pepper"
-               FontSize="12"
-               FontFamily="Montserrat-SemiBold"
-               HorizontalOptions="Center"
-               TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, Dark={StaticResource TextPrimaryColorDark}}" />
-                    </StackLayout>
-
-                    <!-- Topping: Olive -->
-                    <StackLayout FlexLayout.Basis="25%" HorizontalOptions="Center" Margin="4">
-                        <Frame ClassId="olive" Style="{StaticResource ToppingIconStyle}">
-                            <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="OnToppingSelected" />
-                            </Frame.GestureRecognizers>
-                            <VisualStateManager.VisualStateGroups>
-                                <VisualStateGroup x:Name="SelectionStates">
-                                    <VisualState x:Name="Normal">
-                                        <VisualState.Setters>
-                                            <Setter Property="BorderColor" Value="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource BorderColorDark}}" />
-                                        </VisualState.Setters>
-                                    </VisualState>
-                                    <VisualState x:Name="Selected">
-                                        <VisualState.Setters>
-                                            <Setter Property="BorderColor" Value="Blue" />
-                                        </VisualState.Setters>
-                                    </VisualState>
-                                </VisualStateGroup>
-                            </VisualStateManager.VisualStateGroups>
-                            <Grid>
-                                <Image Source="topping_olive.jpg"
-                       Aspect="AspectFill"
-                       HorizontalOptions="FillAndExpand"
-                       VerticalOptions="FillAndExpand" />
-                            </Grid>
-                        </Frame>
-                        <Label Text="Olive"
-               FontSize="12"
-               FontFamily="Montserrat-SemiBold"
-               HorizontalOptions="Center"
-               TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, Dark={StaticResource TextPrimaryColorDark}}" />
-                    </StackLayout>
-
-                    <!-- Topping: Bacon -->
-                    <StackLayout FlexLayout.Basis="25%" HorizontalOptions="Center" Margin="4">
-                        <Frame ClassId="bacon" Style="{StaticResource ToppingIconStyle}">
-                            <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="OnToppingSelected" />
-                            </Frame.GestureRecognizers>
-                            <VisualStateManager.VisualStateGroups>
-                                <VisualStateGroup x:Name="SelectionStates">
-                                    <VisualState x:Name="Normal">
-                                        <VisualState.Setters>
-                                            <Setter Property="BorderColor" Value="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource BorderColorDark}}" />
-                                        </VisualState.Setters>
-                                    </VisualState>
-                                    <VisualState x:Name="Selected">
-                                        <VisualState.Setters>
-                                            <Setter Property="BorderColor" Value="Blue" />
-                                        </VisualState.Setters>
-                                    </VisualState>
-                                </VisualStateGroup>
-                            </VisualStateManager.VisualStateGroups>
-                            <Grid>
-                                <Image Source="topping_bacon.jpg"
-                       Aspect="AspectFill"
-                       HorizontalOptions="FillAndExpand"
-                       VerticalOptions="FillAndExpand" />
-                            </Grid>
-                        </Frame>
-                        <Label Text="Bacon"
-               FontSize="12"
-               FontFamily="Montserrat-SemiBold"
-               HorizontalOptions="Center"
-               TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, Dark={StaticResource TextPrimaryColorDark}}" />
-                    </StackLayout>
-
-                    <!-- Topping: Sausage -->
-                    <StackLayout FlexLayout.Basis="25%" HorizontalOptions="Center" Margin="4">
-                        <Frame ClassId="sausage" Style="{StaticResource ToppingIconStyle}">
-                            <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="OnToppingSelected" />
-                            </Frame.GestureRecognizers>
-                            <VisualStateManager.VisualStateGroups>
-                                <VisualStateGroup x:Name="SelectionStates">
-                                    <VisualState x:Name="Normal">
-                                        <VisualState.Setters>
-                                            <Setter Property="BorderColor" Value="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource BorderColorDark}}" />
-                                        </VisualState.Setters>
-                                    </VisualState>
-                                    <VisualState x:Name="Selected">
-                                        <VisualState.Setters>
-                                            <Setter Property="BorderColor" Value="Blue" />
-                                        </VisualState.Setters>
-                                    </VisualState>
-                                </VisualStateGroup>
-                            </VisualStateManager.VisualStateGroups>
-                            <Grid>
-                                <Image Source="topping_sausage.jpg"
-                       Aspect="AspectFill"
-                       HorizontalOptions="FillAndExpand"
-                       VerticalOptions="FillAndExpand" />
-                            </Grid>
-                        </Frame>
-                        <Label Text="Sausage"
-               FontSize="12"
-               FontFamily="Montserrat-SemiBold"
-               HorizontalOptions="Center"
-               TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, Dark={StaticResource TextPrimaryColorDark}}" />
-                    </StackLayout>
-
-                    <!-- Topping: Pineapple -->
-                    <StackLayout FlexLayout.Basis="25%" HorizontalOptions="Center" Margin="4">
-                        <Frame ClassId="pineapple" Style="{StaticResource ToppingIconStyle}">
-                            <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="OnToppingSelected" />
-                            </Frame.GestureRecognizers>
-                            <VisualStateManager.VisualStateGroups>
-                                <VisualStateGroup x:Name="SelectionStates">
-                                    <VisualState x:Name="Normal">
-                                        <VisualState.Setters>
-                                            <Setter Property="BorderColor" Value="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource BorderColorDark}}" />
-                                        </VisualState.Setters>
-                                    </VisualState>
-                                    <VisualState x:Name="Selected">
-                                        <VisualState.Setters>
-                                            <Setter Property="BorderColor" Value="Blue" />
-                                        </VisualState.Setters>
-                                    </VisualState>
-                                </VisualStateGroup>
-                            </VisualStateManager.VisualStateGroups>
-                            <Grid>
-                                <Image Source="topping_pineapple.jpg"
-                       Aspect="AspectFill"
-                       HorizontalOptions="FillAndExpand"
-                       VerticalOptions="FillAndExpand" />
-                            </Grid>
-                        </Frame>
-                        <Label Text="Pineapple"
-               FontSize="12"
-               FontFamily="Montserrat-SemiBold"
-               HorizontalOptions="Center"
-               TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, Dark={StaticResource TextPrimaryColorDark}}" />
-                    </StackLayout>
-
-                </FlexLayout>
-
+                <CollectionView ItemsSource="{Binding AvailableToppings}" ItemsLayout="WrapGrid" SelectionMode="Multiple"
+                                SelectedItems="{Binding SelectedToppings, Mode=TwoWay}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout Padding="4" HorizontalOptions="Center" WidthRequest="90">
+                                <Frame Style="{StaticResource ToppingIconStyle}">
+                                    <Image Source="{Binding Image}" Aspect="AspectFill" />
+                                </Frame>
+                                <Label Text="{Binding Name}" FontSize="12" FontFamily="Montserrat-SemiBold" HorizontalOptions="Center" />
+                            </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
             </StackLayout>
         </ScrollView>
 
-        <!-- BOTTOM SECTION: Price display and "Add to Cart" button -->
-        <Frame Grid.Row="2"
-               CornerRadius="30"
-               Padding="20"
-               HasShadow="True"
+        <!-- BOTTOM PRICE + ADD TO CART -->
+        <Frame Grid.Row="2" CornerRadius="30" Padding="20" HasShadow="True"
                BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource SurfaceColorDark}}">
-
             <Grid ColumnDefinitions="*,Auto">
-                <!-- Total Price Information -->
                 <StackLayout Grid.Column="0" VerticalOptions="Center">
-                    <Label Text="Total Price"
-                           TextColor="{AppThemeBinding Light={StaticResource TextSecondaryColor}, Dark={StaticResource TextSecondaryColorDark}}"
-                           FontFamily="Montserrat-Regular"
-                           FontSize="14" />
-
-                    <!-- Price label is named for code-behind updates -->
-                    <Label x:Name="PriceLabel"
-                           Text="$14.99"
-                           TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, Dark={StaticResource TextPrimaryColorDark}}"
-                           FontFamily="Montserrat-Bold"
-                           FontSize="24" />
+                    <Label Text="Total Price" FontFamily="Montserrat-Regular" FontSize="14" />
+                    <Label Text="{Binding TotalPrice, StringFormat='${0:F2}'}" FontFamily="Montserrat-Bold" FontSize="24" />
                 </StackLayout>
-
-                <!-- "Add to Cart" Button triggers OnAddToCartClicked in code-behind -->
-                <Button Grid.Column="1"
-                        Text="Add to Cart"
-                        Style="{StaticResource PrimaryButton}"
-                        Margin="0"
-                        Clicked="OnAddToCartClicked" />
+                <Button Grid.Column="1" Text="Add to Cart" Style="{StaticResource PrimaryButton}" Margin="0" Command="{Binding AddToCartCommand}" />
             </Grid>
         </Frame>
     </Grid>
