@@ -71,8 +71,14 @@ namespace Pizza_App.Views
         // Navigates to the pizza customization page, passing a sample pizzaId.
         private async void OnPizzaTapped(object sender, EventArgs e)
         {
-            // Navigate to the "customization" route with a sample pizzaId query parameter.
-            await Shell.Current.GoToAsync("///customization?pizzaId=1");
+            // Get the TapGestureRecognizer that triggered the event.
+            var tapGesture = sender as TapGestureRecognizer;
+            if (tapGesture?.CommandParameter is Pizza_App.Models.Pizza selectedPizza)
+            {
+                // Navigate to the customization page, passing the selected pizza's ID as a query parameter.
+                await Shell.Current.GoToAsync($"///customization?pizzaId={selectedPizza.Id}");
+            }
         }
+
     }
 }
