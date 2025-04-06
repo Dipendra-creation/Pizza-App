@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage 
+    xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="Pizza_App.Views.Signup"
+    Title="Sign Up"
+    BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColor}, Dark={StaticResource BackgroundColorDark}}">
+
+    <!-- Main layout for the Signup screen -->
+    <StackLayout Padding="20" Spacing="15" VerticalOptions="CenterAndExpand">
+
+        <!-- Header: Invitation to create an account -->
+        <Label Text="Create Account" 
+               FontSize="24" 
+               FontAttributes="Bold" 
+               HorizontalOptions="Center" />
+
+        <!-- Full Name Entry -->
+        <Entry x:Name="FullNameEntry" 
+               Placeholder="Full Name" 
+               PlaceholderColor="{AppThemeBinding Light={StaticResource TextSecondaryColor}, Dark={StaticResource TextSecondaryColorDark}}"
+               TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, Dark={StaticResource TextPrimaryColorDark}}" />
+
+        <!-- Username Entry -->
+        <Entry x:Name="UsernameEntry" 
+               Placeholder="Username" 
+               PlaceholderColor="{AppThemeBinding Light={StaticResource TextSecondaryColor}, Dark={StaticResource TextSecondaryColorDark}}"
+               TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, Dark={StaticResource TextPrimaryColorDark}}" />
+
+        <!-- Email Entry -->
+        <Entry x:Name="EmailEntry" 
+               Placeholder="Email" 
+               Keyboard="Email" 
+               PlaceholderColor="{AppThemeBinding Light={StaticResource TextSecondaryColor}, Dark={StaticResource TextSecondaryColorDark}}"
+               TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, Dark={StaticResource TextPrimaryColorDark}}" />
+
+        <!-- Phone Number Entry -->
+        <Entry x:Name="PhoneEntry" 
+               Placeholder="Phone Number" 
+               Keyboard="Telephone" 
+               PlaceholderColor="{AppThemeBinding Light={StaticResource TextSecondaryColor}, Dark={StaticResource TextSecondaryColorDark}}"
+               TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, Dark={StaticResource TextPrimaryColorDark}}" />
+
+        <!-- Address Entry -->
+        <Entry x:Name="AddressEntry" 
+               Placeholder="Delivery Address" 
+               PlaceholderColor="{AppThemeBinding Light={StaticResource TextSecondaryColor}, Dark={StaticResource TextSecondaryColorDark}}"
+               TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, Dark={StaticResource TextPrimaryColorDark}}" />
+
+        <!-- Password Entry -->
+        <Entry x:Name="PasswordEntry" 
+               Placeholder="Password" 
+               IsPassword="True" 
+               PlaceholderColor="{AppThemeBinding Light={StaticResource TextSecondaryColor}, Dark={StaticResource TextSecondaryColorDark}}"
+               TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, Dark={StaticResource TextPrimaryColorDark}}" />
+
+        <!-- Confirm Password Entry -->
+        <Entry x:Name="ConfirmPasswordEntry" 
+               Placeholder="Confirm Password" 
+               IsPassword="True" 
+               PlaceholderColor="{AppThemeBinding Light={StaticResource TextSecondaryColor}, Dark={StaticResource TextSecondaryColorDark}}"
+               TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, Dark={StaticResource TextPrimaryColorDark}}" />
+
+        <!-- Sign Up Button -->
+        <Button Text="Sign Up" 
+                Style="{StaticResource PrimaryButton}"
+                Clicked="OnSignUpClicked" />
+
+        <!-- Link to navigate to Login page -->
+        <Label Text="Already have an account? Login" 
+               TextColor="Blue" 
+               HorizontalOptions="Center">
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnLoginTapped" />
+            </Label.GestureRecognizers>
+        </Label>
+    </StackLayout>
+</ContentPage>

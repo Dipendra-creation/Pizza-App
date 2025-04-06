@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage 
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="Pizza_App.Views.Login"
+    Title="Login"
+    BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColor}, Dark={StaticResource BackgroundColorDark}}">
+
+    <!-- Main layout for the login screen -->
+    <StackLayout Padding="20" Spacing="15" VerticalOptions="CenterAndExpand">
+        <!-- Welcome message -->
+        <Label Text="Welcome Back" 
+               FontSize="24" 
+               FontAttributes="Bold" 
+               HorizontalOptions="Center" />
+
+        <!-- Username entry field -->
+        <Entry x:Name="UsernameEntry" 
+               Placeholder="Username" 
+               PlaceholderColor="{AppThemeBinding Light={StaticResource TextSecondaryColor}, Dark={StaticResource TextSecondaryColorDark}}"
+               TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, Dark={StaticResource TextPrimaryColorDark}}" />
+
+        <!-- Password entry field -->
+        <Entry x:Name="PasswordEntry" 
+               Placeholder="Password" 
+               IsPassword="True"
+               PlaceholderColor="{AppThemeBinding Light={StaticResource TextSecondaryColor}, Dark={StaticResource TextSecondaryColorDark}}"
+               TextColor="{AppThemeBinding Light={StaticResource TextPrimaryColor}, Dark={StaticResource TextPrimaryColorDark}}" />
+
+        <!-- Login button -->
+        <Button Text="Login" 
+                Style="{StaticResource PrimaryButton}"
+                Clicked="OnLoginClicked" />
+
+        <!-- Navigation to Signup page -->
+        <Label Text="Don't have an account? Sign Up" 
+               TextColor="Blue" 
+               HorizontalOptions="Center">
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnSignUpTapped" />
+            </Label.GestureRecognizers>
+        </Label>
+    </StackLayout>
+</ContentPage>
