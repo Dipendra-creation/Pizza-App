@@ -8,7 +8,7 @@ using Pizza_App.Services;
 namespace Pizza_App.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    [QueryProperty("PizzaName", "pizzaName")] // receive pizzaName from navigation
+    [QueryProperty(nameof(PizzaId), "pizzaId")] // receives the ID from Shell navigation
     public partial class PizzaCustomization : ContentPage
     {
         private readonly PizzaService _pizzaService = new PizzaService();
@@ -18,7 +18,7 @@ namespace Pizza_App.Views
         {
             InitializeComponent();
 
-            // Enable back navigation with software and hardware
+            // Set software/hardware back button behavior
             NavigationPage.SetHasBackButton(this, true);
             Shell.SetBackButtonBehavior(this, new BackButtonBehavior
             {
@@ -26,33 +26,49 @@ namespace Pizza_App.Views
             });
         }
 
-        private string pizzaName;
-        public string PizzaName
+        private string pizzaId;
+        public string PizzaId
         {
-            get => pizzaName;
+            get => pizzaId;
             set
             {
-                pizzaName = Uri.UnescapeDataString(value ?? string.Empty);
-                LoadPizzaAsync(pizzaName);
+                pizzaId = Uri.UnescapeDataString(value ?? string.Empty);
+                if (int.TryParse(pizzaId, out int id))
+                {
+                    LoadPizzaAsync(id);
+                }
+                else
+                {
+                    // Invalid ID format
+                    DisplayAlert("Error", "Invalid Pizza ID format.", "OK");
+                    Shell.Current.GoToAsync("..");
+                }
             }
         }
 
-        private async void LoadPizzaAsync(string name)
+        private async void LoadPizzaAsync(int id)
         {
-            var pizza = await _pizzaService.GetPizzaByNameAsync(name);
-            if (pizza != null)
+            try
             {
-                _viewModel = new PizzaCustomizationViewModel(pizza);
-                BindingContext = _viewModel;
+                var pizza = await _pizzaService.GetPizzaByIdAsync(id);
+                if (pizza != null)
+                {
+                    _viewModel = new PizzaCustomizationViewModel(pizza);
+                    BindingContext = _viewModel;
+                }
+                else
+                {
+                    await DisplayAlert("Error", $"Pizza with ID {id} not found.", "OK");
+                    await Shell.Current.GoToAsync("..");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                await DisplayAlert("Error", "Pizza not found", "OK");
+                await DisplayAlert("Error", $"Unable to load pizza: {ex.Message}", "OK");
                 await Shell.Current.GoToAsync("..");
             }
         }
 
-        // Handle Android hardware back button
         protected override bool OnBackButtonPressed()
         {
             Device.BeginInvokeOnMainThread(async () =>

@@ -14,14 +14,29 @@ namespace Pizza_App.Services
         public PizzaService()
         {
             _database = SQLiteService.Database;
-            // Ensure the Pizza table exists.
             _database.CreateTableAsync<Pizza>().Wait();
         }
 
         // Retrieves all pizzas from the database.
-        public Task<List<Pizza>> GetPizzasAsync()
+        public Task<List<Pizza>> GetAllPizzasAsync()
         {
             return _database.Table<Pizza>().ToListAsync();
+        }
+
+        // Gets a pizza by ID (used for ID-based navigation).
+        public Task<Pizza> GetPizzaByIdAsync(int id)
+        {
+            return _database.Table<Pizza>()
+                            .Where(p => p.Id == id)
+                            .FirstOrDefaultAsync();
+        }
+
+        // Optionally gets a pizza by name (can be removed if you're using only ID).
+        public Task<Pizza> GetPizzaByNameAsync(string name)
+        {
+            return _database.Table<Pizza>()
+                            .Where(p => p.Name == name)
+                            .FirstOrDefaultAsync();
         }
 
         // Adds a single pizza to the database.
@@ -36,10 +51,10 @@ namespace Pizza_App.Services
             return _database.InsertAllAsync(pizzas);
         }
 
-        // Seeds initial pizza data if none exist in the database.
+        // Seeds the pizza table with default data if it's empty.
         public async Task SeedDefaultPizzasAsync()
         {
-            var existing = await GetPizzasAsync();
+            var existing = await GetAllPizzasAsync();
             if (existing.Count == 0)
             {
                 var pizzas = new List<Pizza>
@@ -63,11 +78,6 @@ namespace Pizza_App.Services
 
                 await AddPizzasAsync(pizzas);
             }
-        }
-
-        internal async Task<Pizza> GetPizzaByNameAsync(string name)
-        {
-            throw new NotImplementedException();
         }
     }
 }

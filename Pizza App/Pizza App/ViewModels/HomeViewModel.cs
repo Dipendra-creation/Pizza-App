@@ -32,7 +32,7 @@ namespace Pizza_App.ViewModels
         {
             try
             {
-                var pizzas = await _pizzaService.GetPizzasAsync();
+                var pizzas = await _pizzaService.GetAllPizzasAsync();
 
                 Device.BeginInvokeOnMainThread(() =>
                 {

@@ -20,10 +20,11 @@ namespace Pizza_App.Views
         {
             if (sender is Frame frame && frame.BindingContext is Pizza selectedPizza)
             {
-                var route = $"customization?pizzaName={Uri.EscapeDataString(selectedPizza.Name)}";
+                var route = $"customization?id={selectedPizza.Id}";
                 await Shell.Current.GoToAsync(route);
             }
         }
+
 
         // Optional: Animate items when the page appears.
         protected override void OnAppearing()
